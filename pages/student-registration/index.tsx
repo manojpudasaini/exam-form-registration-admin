@@ -4,19 +4,38 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import {
   Button,
+  Flex,
   FormControl,
   FormErrorMessage,
   FormLabel,
   Input,
+  Select,
+  SimpleGrid,
+  VStack,
 } from "@chakra-ui/react";
 import axios from "axios";
 
+const programOptions = [
+  {
+    option: "BE-Information Technlogy",
+    value: "BE-IT",
+  },
+  {
+    option: "BE-Computer",
+    value: "BE-Com",
+  },
+  {
+    option: "BE-Civil",
+    value: "BE-Civil",
+  },
+];
 const validationSchema = yup.object().shape({
   name: yup.string().required("This field is mandatory"),
   email: yup
     .string()
     .required("This field is mandatory")
     .email("invalid email"),
+  program: yup.string().required("select your program"),
   symbol_number: yup
     .string()
     .required("This field is mandatory")
@@ -43,6 +62,7 @@ const validationSchema = yup.object().shape({
 });
 type LoginFormInputs = {
   name: string;
+  program: string;
   email: string;
   symbol_number: string;
   registration_number: string;
@@ -73,85 +93,117 @@ function StudentRegistration() {
   console.log(errors);
 
   return (
-    <div>
+    <VStack align={"stretch"} p={4}>
       <form onSubmit={handleSubmit(formSubmit)}>
-        <FormControl isInvalid={!!errors?.name?.message} p="4" isRequired>
-          <FormLabel>Name</FormLabel>
+        <Flex direction={"column"} gap={4} w={"full"}>
+          <SimpleGrid columns={[1, null, 2]} gap={4}>
+            <FormControl isInvalid={!!errors?.name?.message} isRequired>
+              <FormLabel>Name</FormLabel>
+              <Input type="name" placeholder="Name" {...register("name")} />
+              <FormErrorMessage>{errors?.name?.message}</FormErrorMessage>
+            </FormControl>
+            <FormControl isInvalid={!!errors?.program?.message} isRequired>
+              <FormLabel>Program</FormLabel>
 
-          <Input type="name" placeholder="Name" {...register("name")} />
-          <FormErrorMessage>{errors?.name?.message}</FormErrorMessage>
-        </FormControl>
+              <Select
+                variant={"filled"}
+                {...register("program")}
+                defaultValue=""
+              >
+                <option hidden disabled value="">
+                  select your program...
+                </option>
+                {programOptions.map((item, key) => (
+                  <option key={key} value={item.value}>
+                    {item.option}
+                  </option>
+                ))}
+              </Select>
+              <FormErrorMessage>{errors?.name?.message}</FormErrorMessage>
+            </FormControl>
+          </SimpleGrid>
+          <SimpleGrid columns={[1, null, 2]} minChildWidth={200} gap={4}>
+            <FormControl
+              isInvalid={!!errors?.symbol_number?.message}
+              isRequired
+            >
+              <FormLabel>Symbol Number</FormLabel>
 
-        <FormControl isInvalid={!!errors?.email?.message} p="4" isRequired>
-          <FormLabel>Email</FormLabel>
+              <Input
+                placeholder="Symbol Number"
+                {...register("symbol_number")}
+              />
+              <FormErrorMessage>
+                {errors?.symbol_number?.message}
+              </FormErrorMessage>
+            </FormControl>
+            <FormControl
+              isInvalid={!!errors?.registration_number?.message}
+              isRequired
+            >
+              <FormLabel>PU Registration Number</FormLabel>
 
-          <Input type="email" placeholder="Email" {...register("email")} />
-          <FormErrorMessage>{errors?.email?.message}</FormErrorMessage>
-        </FormControl>
-        <FormControl isInvalid={!!errors?.password?.message} p="4" isRequired>
-          <FormLabel>Password</FormLabel>
-          <Input
-            type="password"
-            placeholder="password"
-            {...register("password")}
-          />
-          <FormErrorMessage>{errors?.password?.message}</FormErrorMessage>
-        </FormControl>
-        <FormControl
-          isInvalid={!!errors?.passwordConfirmation?.message}
-          p="4"
-          isRequired
-        >
-          <FormLabel>Re-Enter Password</FormLabel>
-          <Input
-            type="password"
-            placeholder="confirm password"
-            {...register("passwordConfirmation")}
-          />
-          <FormErrorMessage>
-            {errors?.passwordConfirmation?.message}
-          </FormErrorMessage>
-        </FormControl>
-        <FormControl
-          isInvalid={!!errors?.symbol_number?.message}
-          p="4"
-          isRequired
-        >
-          <FormLabel>Symbol Number</FormLabel>
+              <Input
+                placeholder="PU Registration Number"
+                {...register("registration_number")}
+              />
+              <FormErrorMessage>
+                {errors?.registration_number?.message}
+              </FormErrorMessage>
+            </FormControl>
+          </SimpleGrid>
+          <FormControl isInvalid={!!errors?.email?.message} isRequired>
+            <FormLabel>Email</FormLabel>
 
-          <Input placeholder="Symbol Number" {...register("symbol_number")} />
-          <FormErrorMessage>{errors?.symbol_number?.message}</FormErrorMessage>
-        </FormControl>
-        <FormControl
-          isInvalid={!!errors?.registration_number?.message}
-          p="4"
-          isRequired
-        >
-          <FormLabel>PU Registration Number</FormLabel>
+            <Input type="email" placeholder="Email" {...register("email")} />
+            <FormErrorMessage>{errors?.email?.message}</FormErrorMessage>
+          </FormControl>
+          <SimpleGrid columns={[1, null, 2]} gap={4}>
+            <FormControl isInvalid={!!errors?.password?.message} isRequired>
+              <FormLabel>Password</FormLabel>
+              <Input
+                type="password"
+                placeholder="password"
+                {...register("password")}
+              />
+              <FormErrorMessage>{errors?.password?.message}</FormErrorMessage>
+            </FormControl>
+            <FormControl
+              isInvalid={!!errors?.passwordConfirmation?.message}
+              isRequired
+            >
+              <FormLabel>Re-Enter Password</FormLabel>
+              <Input
+                type="password"
+                placeholder="confirm password"
+                {...register("passwordConfirmation")}
+              />
+              <FormErrorMessage>
+                {errors?.passwordConfirmation?.message}
+              </FormErrorMessage>
+            </FormControl>
+          </SimpleGrid>
 
-          <Input
-            placeholder="PU Registration Number"
-            {...register("registration_number")}
-          />
-          <FormErrorMessage>
-            {errors?.registration_number?.message}
-          </FormErrorMessage>
-        </FormControl>
-        <FormControl
-          isInvalid={!!errors?.phone_number?.message}
-          p="4"
-          isRequired
-        >
-          <FormLabel>Phone Number</FormLabel>
+          <FormControl isInvalid={!!errors?.phone_number?.message} isRequired>
+            <FormLabel>Phone Number</FormLabel>
 
-          <Input placeholder="Phone Number" {...register("phone_number")} />
+            <Input placeholder="Phone Number" {...register("phone_number")} />
 
-          <FormErrorMessage>{errors?.phone_number?.message}</FormErrorMessage>
-        </FormControl>
+            <FormErrorMessage>{errors?.phone_number?.message}</FormErrorMessage>
+          </FormControl>
 
-        <Button type="submit">submit</Button>
+          <Button
+            type="submit"
+            colorScheme={"blue"}
+            width={"sm"}
+            mt={4}
+            alignSelf={"center"}
+          >
+            Register
+          </Button>
+        </Flex>
       </form>
-    </div>
+    </VStack>
   );
 }
 

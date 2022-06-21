@@ -1,11 +1,31 @@
-import { Flex, Heading, Text, VStack } from "@chakra-ui/react";
-import Image from "next/image";
-import React from "react";
+import { Flex } from "@chakra-ui/react";
 
+import React from "react";
+import { IconType } from "react-icons";
+import {
+  FiHome,
+  FiTrendingUp,
+  FiCompass,
+  FiStar,
+  FiSettings,
+  FiMenu,
+} from "react-icons/fi";
+import NavItem from "../NavItem";
+interface LinkItemProps {
+  name: string;
+  icon: IconType;
+}
+const LinkItems: Array<LinkItemProps> = [
+  { name: "Home", icon: FiHome },
+  { name: "Apply for Examination", icon: FiTrendingUp },
+  // { name: "", icon: FiCompass },
+  // { name: "Favourites", icon: FiStar },
+  // { name: "Settings", icon: FiSettings },
+];
 const Sidebar = () => {
   return (
     <Flex
-      width={"sm"}
+      width={"full"}
       bg={"gray.50"}
       shadow={"sm"}
       h={"auto"}
@@ -14,25 +34,18 @@ const Sidebar = () => {
       align={"start"}
       justify={"space-evenly"}
     >
-      <Flex borderBottom={"2px"} borderColor="white" w={"full"} pb={2}>
-        <Flex flexShrink={0} align="center">
-          <Image
-            src="/logo.png"
-            width={100}
-            height={100}
-            objectFit="contain"
-            alt="EEC-logo"
-          />
-        </Flex>
-        <Heading
-          pl={{ base: "4", md: "8" }}
-          pt={4}
-          lineHeight={1.6}
-          color={"blue.500"}
-          letterSpacing={"wide"}
-        >
-          EEMC
-        </Heading>
+      <Flex
+        borderBottom={"2px"}
+        borderColor="white"
+        w={"full"}
+        pb={2}
+        direction={"column"}
+      >
+        {LinkItems.map((link) => (
+          <NavItem key={link.name} icon={link.icon}>
+            {link.name}
+          </NavItem>
+        ))}
       </Flex>
     </Flex>
   );
