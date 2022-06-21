@@ -17,6 +17,7 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
+  Text,
   useDisclosure,
 } from "@chakra-ui/react";
 import Image from "next/image";
@@ -84,8 +85,18 @@ const Header = () => {
       </Heading>
       <Box>
         <Menu>
-          <MenuButton as={Button} gap={2} rightIcon={<ChevronDownIcon />}>
-            <Avatar size={{ base: "xs", md: "sm" }} variant={""} />
+          <MenuButton
+            p="2"
+            shadow={"sm"}
+            rounded={"lg"}
+            _hover={{
+              shadow: "md",
+            }}
+          >
+            <HStack>
+              <Avatar size={{ base: "xs", md: "sm" }} name="Student Name" />
+              <Text>Student Name</Text>
+            </HStack>
           </MenuButton>
           <MenuList>
             <MenuItem onClick={() => console.log("logged out")}>

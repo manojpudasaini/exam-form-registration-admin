@@ -33,7 +33,7 @@ const Sidebar = () => {
       width={"full"}
       bg={"gray.50"}
       shadow={"sm"}
-      h={"auto"}
+      h={"100vh"}
       px={4}
       py={2}
       align={"start"}
