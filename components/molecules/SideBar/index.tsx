@@ -14,10 +14,15 @@ import NavItem from "../NavItem";
 interface LinkItemProps {
   name: string;
   icon: IconType;
+  link: string;
 }
 const LinkItems: Array<LinkItemProps> = [
-  { name: "Home", icon: FiHome },
-  { name: "Apply for Examination", icon: FiTrendingUp },
+  { name: "Home", link: "/", icon: FiHome },
+  {
+    name: "Apply for Examination",
+    link: "/student-registration",
+    icon: FiTrendingUp,
+  },
   // { name: "", icon: FiCompass },
   // { name: "Favourites", icon: FiStar },
   // { name: "Settings", icon: FiSettings },
@@ -42,7 +47,7 @@ const Sidebar = () => {
         direction={"column"}
       >
         {LinkItems.map((link) => (
-          <NavItem key={link.name} icon={link.icon}>
+          <NavItem key={link.name} icon={link.icon} link={link.link}>
             {link.name}
           </NavItem>
         ))}
