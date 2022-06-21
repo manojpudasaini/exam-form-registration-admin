@@ -14,6 +14,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import axios from "axios";
+import { API } from "../../utils/api";
 
 const programOptions = [
   {
@@ -82,11 +83,10 @@ function StudentRegistration() {
     resolver: yupResolver(validationSchema),
   });
   const formSubmit = async (data: LoginFormInputs) => {
-    await axios
-      .post("/api/student", {
-        email: data.email,
-        password: data.password,
-      })
+    await API.post("/api/student", {
+      email: data.email,
+      password: data.password,
+    })
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
 
