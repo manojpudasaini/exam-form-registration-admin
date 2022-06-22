@@ -28,10 +28,13 @@ export default async function handler(
       // disabled: false,
       // admin: true,
     })
+    .then((response: any) => {
+      res.status(200).json({ response: response });
+    })
     .catch((error: any) => res.status(500).json({ error: error }));
   console.log(resp?.uid);
   const finalResp = await admin
     .auth()
     .setCustomUserClaims(resp?.uid, { admin: true });
-  res.status(200).json({ final: finalResp });
+  // res.status(200).json({ final: finalResp });
 }

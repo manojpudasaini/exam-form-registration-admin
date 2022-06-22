@@ -53,7 +53,7 @@ const Header = () => {
       py={10}
       justify={"space-between"}
     >
-      <Box display={{ base: "block", lg: "none" }}>
+      <Box display={{ base: "block", lg: "none" }} px={2}>
         <IconButton
           aria-label="show menu"
           icon={<HamburgerIcon />}

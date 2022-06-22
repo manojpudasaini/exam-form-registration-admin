@@ -11,6 +11,7 @@ import {
   Input,
   Select,
   SimpleGrid,
+  useToast,
   VStack,
 } from "@chakra-ui/react";
 import { API } from "../../utils/api";
@@ -81,13 +82,30 @@ function StudentRegistration() {
     mode: "all",
     resolver: yupResolver(validationSchema),
   });
+  const toast = useToast();
   const formSubmit = async (data: LoginFormInputs) => {
     await API.post("/api/student", {
       email: data.email,
       password: data.password,
     })
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+      .then((res) => {
+        console.log(res, "api response");
+        toast({
+          title: "Account created successfully",
+          status: "success",
+          position: "top-right",
+          isClosable: true,
+        });
+      })
+      .catch((err) => {
+        console.log(err, "error from api");
+        toast({
+          title: `${err?.data?.error?.message}`,
+          status: "error",
+          position: "top-right",
+          isClosable: true,
+        });
+      });
 
     console.log(data, "my console data is coming here");
   };

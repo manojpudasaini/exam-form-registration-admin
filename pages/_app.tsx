@@ -1,11 +1,14 @@
 import type { AppProps } from "next/app";
 import { ChakraProvider } from "@chakra-ui/react";
 import Layout from "../components/organisms/Layout";
-import { AuthProvider } from "../utils/AuthContext";
-import { useState } from "react";
+import { AuthContext, AuthProvider } from "../utils/AuthContext";
+import { useContext, useState } from "react";
+import Login from "./login";
+import { useRouter } from "next/router";
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const [currentUser, setCurrentUser] = useState(null);
+  const { user } = useContext(AuthContext);
+
   return (
     <ChakraProvider>
       <AuthProvider>
