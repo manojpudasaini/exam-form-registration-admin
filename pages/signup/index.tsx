@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useContext } from "react";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
@@ -13,8 +13,8 @@ import {
   SimpleGrid,
   VStack,
 } from "@chakra-ui/react";
-import axios from "axios";
 import { API } from "../../utils/api";
+import { AuthContext } from "../../utils/AuthContext";
 
 const programOptions = [
   {
@@ -45,10 +45,9 @@ const validationSchema = yup.object().shape({
     .string()
     .required("This field is mandatory")
     .matches(
-      /[0-9]{4}[-][0-9]{1}[-][0-9]{2}[-][0-9]{4}/,
+      /([0-9]{4}[-][0-9]{1}[-][0-9]{2}[-][0-9]{4})$/,
       "please enter your registration number correctly"
-    )
-    .max(14),
+    ),
   phone_number: yup
     .string()
     .required("This field is mandatory")
@@ -92,7 +91,10 @@ function StudentRegistration() {
 
     console.log(data, "my console data is coming here");
   };
-  console.log(errors);
+  console.log(errors, "errors");
+
+  const { user } = useContext(AuthContext);
+  console.log(user, "user in reg page");
 
   return (
     <VStack align={"stretch"} p={4}>
@@ -117,7 +119,7 @@ function StudentRegistration() {
                   </option>
                 ))}
               </Select>
-              <FormErrorMessage>{errors?.name?.message}</FormErrorMessage>
+              <FormErrorMessage>{errors?.program?.message}</FormErrorMessage>
             </FormControl>
           </SimpleGrid>
           <SimpleGrid columns={[1, null, 2]} minChildWidth={200} gap={6}>

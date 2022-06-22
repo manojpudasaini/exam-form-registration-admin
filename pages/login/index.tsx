@@ -12,11 +12,12 @@ import {
 } from "@chakra-ui/react";
 
 import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { auth } from "../../utils/firebase-config";
 import { useRouter } from "next/router";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
+import { AuthContext } from "../../utils/AuthContext";
 
 const Login = () => {
   const toast = useToast();
@@ -27,7 +28,7 @@ const Login = () => {
     register,
     formState: { errors, isSubmitting },
   } = useForm();
-  const [user, setUser] = useState({});
+  const { setUser } = useContext(AuthContext);
   const loginHandler = async (data: any) => {
     try {
       await signInWithEmailAndPassword(auth, data?.email, data?.password);

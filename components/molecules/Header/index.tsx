@@ -1,8 +1,7 @@
-import { ChevronDownIcon, HamburgerIcon } from "@chakra-ui/icons";
+import { HamburgerIcon } from "@chakra-ui/icons";
 import {
   Avatar,
   Box,
-  Button,
   Drawer,
   DrawerBody,
   DrawerCloseButton,
@@ -21,10 +20,26 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import Image from "next/image";
+import { useContext } from "react";
+import { AuthContext } from "../../../utils/AuthContext";
 import Sidebar from "../SideBar";
+import { auth } from "../../../utils/firebase-config";
+import { signOut } from "firebase/auth";
+import { useRouter } from "next/router";
 
 const Header = () => {
   const { onClose, isOpen, onOpen } = useDisclosure();
+  const router = useRouter();
+  const { user } = useContext(AuthContext);
+  const handleSignOut = async () => {
+    await signOut(auth)
+      .then(() => {
+        console.log("signout success");
+      })
+      .catch((error) => {
+        console.log(error, "error");
+      });
+  };
   return (
     <Flex
       bg={"gray.50"}
@@ -38,7 +53,7 @@ const Header = () => {
       py={10}
       justify={"space-between"}
     >
-      <Box display={{ base: "block", md: "none" }}>
+      <Box display={{ base: "block", lg: "none" }}>
         <IconButton
           aria-label="show menu"
           icon={<HamburgerIcon />}
@@ -57,13 +72,14 @@ const Header = () => {
           </DrawerContent>
         </Drawer>
       </Box>
-      <Flex flexShrink={0} align="center">
+      <Flex flexShrink={0} align="center" cursor={"pointer"}>
         <Image
           src="/logo.png"
           width={100}
           height={70}
           objectFit="contain"
           alt="EEC-logo"
+          onClick={() => router.push("/")}
         />
         <Heading
           lineHeight={1.6}
@@ -94,14 +110,12 @@ const Header = () => {
             }}
           >
             <HStack>
-              <Avatar size={{ base: "xs", md: "sm" }} name="Student Name" />
-              <Text>Student Name</Text>
+              <Avatar size={{ base: "xs", md: "sm" }} />
+              <Text>{user?.email}</Text>
             </HStack>
           </MenuButton>
           <MenuList>
-            <MenuItem onClick={() => console.log("logged out")}>
-              logout
-            </MenuItem>
+            <MenuItem onClick={handleSignOut}>logout</MenuItem>
           </MenuList>
         </Menu>
       </Box>

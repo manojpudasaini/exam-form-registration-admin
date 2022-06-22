@@ -3,6 +3,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 
 import Layout from "../components/organisms/Layout";
+import Login from "./login";
 
 const Home: NextPage = () => {
   return (

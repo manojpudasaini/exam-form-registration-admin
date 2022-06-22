@@ -13,7 +13,7 @@ const Layout = ({ children }: LayoutProps) => {
       <Header />
 
       <HStack w={"full"} align={"stretch"}>
-        <Flex w={"sm"} display={{ base: "none", md: "flex" }}>
+        <Flex w={"sm"} display={{ base: "none", lg: "flex" }}>
           <Sidebar />
         </Flex>
 
