@@ -18,6 +18,7 @@ import { auth } from "../../utils/firebase-config";
 import { useRouter } from "next/router";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 import { AuthContext } from "../../utils/AuthContext";
+import Image from "next/image";
 
 const Login = () => {
   const toast = useToast();
@@ -27,7 +28,9 @@ const Login = () => {
     handleSubmit,
     register,
     formState: { errors, isSubmitting },
-  } = useForm();
+  } = useForm({
+    mode: "all",
+  });
   const { setUser } = useContext(AuthContext);
   const loginHandler = async (data: any) => {
     try {
@@ -54,49 +57,67 @@ const Login = () => {
       });
     }
   };
+
   return (
     <Flex
       align={"center"}
-      justify={"center"}
+      justify={"start"}
       direction={"column"}
       gap={10}
-      px={6}
+      w={"full"}
+      h={"100vh"}
     >
-      <Heading color={"blue.400"} as="h2" size={"lg"} p="2">
-        Welcome to Examination Form Registration
-      </Heading>
+      <Flex
+        align={"center"}
+        justify={"center"}
+        py={4}
+        gap={{ base: "0", md: "10" }}
+        bg={"gray.100"}
+        w={"full"}
+      >
+        <Image src={"/logo.png"} height={100} width={100} objectFit="contain" />
+        <Heading
+          color={"blue.500"}
+          as="h2"
+          size={{ base: "lg", md: "xl" }}
+          letterSpacing={"wider"}
+        >
+          Examination Form Registration
+        </Heading>
+      </Flex>
       <Box
         shadow={"2xl"}
         p={{ base: "2", sm: "5" }}
         rounded={"lg"}
-        w={{ base: "full", sm: "md" }}
+        w={{ base: "full", sm: "md", md: "lg" }}
+        bg={"white"}
       >
         <form onSubmit={handleSubmit(loginHandler)}>
           <VStack
             justify={"center"}
             marginX={{ base: 0, md: "auto" }}
-            spacing={4}
+            spacing={6}
           >
-            <FormControl isInvalid={errors.email}>
+            <FormControl isInvalid={errors.email} isRequired>
               <FormLabel htmlFor="email">Email Address</FormLabel>
               <Input
                 id="email"
                 type="email"
                 {...register("email", {
-                  required: "email is required",
+                  required: "Please enter your email",
                 })}
               />
               <FormErrorMessage>
                 {errors.email && errors.email.message}
               </FormErrorMessage>
             </FormControl>
-            <FormControl isInvalid={errors.password}>
+            <FormControl isInvalid={errors.password} isRequired>
               <FormLabel htmlFor="password">Password</FormLabel>
               <Input
                 id="password"
                 type="password"
                 {...register("password", {
-                  required: "password is required",
+                  required: "Please enter your password",
                 })}
               />
               <FormErrorMessage>

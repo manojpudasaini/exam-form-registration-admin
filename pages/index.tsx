@@ -3,6 +3,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 
 import Layout from "../components/organisms/Layout";
+import PrivateRoute from "../withPrivateRoute";
 import Login from "./login";
 
 const Home: NextPage = () => {
@@ -16,8 +17,9 @@ const Home: NextPage = () => {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      abcd
     </div>
   );
 };
 
-export default Home;
+export default PrivateRoute(Home);

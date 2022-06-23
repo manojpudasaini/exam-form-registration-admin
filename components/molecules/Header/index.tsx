@@ -28,13 +28,17 @@ import { signOut } from "firebase/auth";
 import { useRouter } from "next/router";
 
 const Header = () => {
+  const { setUser } = useContext(AuthContext);
   const { onClose, isOpen, onOpen } = useDisclosure();
   const router = useRouter();
   const { user } = useContext(AuthContext);
+
   const handleSignOut = async () => {
     await signOut(auth)
       .then(() => {
         console.log("signout success");
+        setUser(null);
+        router.push("/login");
       })
       .catch((error) => {
         console.log(error, "error");
