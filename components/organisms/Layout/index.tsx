@@ -12,7 +12,7 @@ interface LayoutProps {
 const Layout = ({ children, user }: LayoutProps) => {
   console.log(user, "layout user");
   return (
-    <VStack w={"full"} spacing={0} position={"relative"}>
+    <VStack w={"full"} spacing={0} position={"relative"} h={"100%"}>
       {user && <Header />}
 
       <HStack w={"full"} align={"stretch"}>
@@ -24,9 +24,9 @@ const Layout = ({ children, user }: LayoutProps) => {
 
         <div style={{ width: "100%", padding: "0 8px 0 8px" }}>{children}</div>
       </HStack>
-      <Box position={"absolute"} bottom={0} w={"full"}>
+      {/* <Box position={"absolute"} bottom={0} w={"full"}>
         <Footer />
-      </Box>
+      </Box> */}
     </VStack>
   );
 };

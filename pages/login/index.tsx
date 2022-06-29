@@ -70,10 +70,11 @@ const Login = () => {
       <Flex
         align={"center"}
         justify={"center"}
-        py={4}
+        pt={{ sm: "2", lg: "4" }}
         gap={{ base: "0", md: "10" }}
         bg={"gray.100"}
         w={"full"}
+        py={"2"}
       >
         <Image src={"/logo.png"} height={100} width={100} objectFit="contain" />
         <Heading
@@ -91,6 +92,7 @@ const Login = () => {
         rounded={"lg"}
         w={{ base: "full", sm: "md", md: "lg" }}
         bg={"white"}
+        zIndex={1}
       >
         <form onSubmit={handleSubmit(loginHandler)}>
           <VStack

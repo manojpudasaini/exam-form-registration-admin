@@ -1,5 +1,4 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { auth, firebase } from "../../../utils/firebase-config";
 
 var admin = require("firebase-admin");
 
@@ -22,21 +21,15 @@ export default async function handler(
     .createUser({
       email: req.body.email,
       password: req.body.password,
-      // emailVerified: false,
-      // phoneNumber: "+9779813228397",
-      // displayName: "John Doe",
-      // photoURL: "http://www.example.com/12345678/photo.png",
-      // disabled: false,
-      // admin: true,
     })
-
-    .then((response: any) => {
+    .then(async (response: any) => {
       res.status(200).json({ response: response });
     })
     .catch((error: any) => res.status(500).json({ error: error }));
   console.log(resp?.uid);
-  const finalResp = await admin
-    .auth()
-    .setCustomUserClaims(resp?.uid, { admin: true });
-  res.status(200).json({ final: finalResp });
+
+  // const finalResp = await admin
+  //   .auth()
+  //   .setCustomUserClaims(resp?.uid, { admin: true });
+  // res.status(200).json({ final: finalResp });
 }

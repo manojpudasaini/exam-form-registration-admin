@@ -1,13 +1,12 @@
 import type { AppProps } from "next/app";
 import { ChakraProvider } from "@chakra-ui/react";
 import Layout from "../components/organisms/Layout";
-import { AuthContext, AuthProvider } from "../utils/AuthContext";
-import { useContext, useEffect, useState } from "react";
+import { AuthProvider } from "../utils/AuthContext";
+import { useEffect, useState } from "react";
 import { auth } from "../utils/firebase-config";
 
 function MyApp({ Component, pageProps }: AppProps) {
-  // const { user, setUser, authenticated } = useContext(AuthContext);
-  const [user, setUser] = useState();
+  const [user, setUser] = useState<any>();
   const initialLoad = () => {
     auth.onAuthStateChanged(async (user: any) => {
       try {
