@@ -22,6 +22,7 @@ export default async function handler(
       email: req.body.email,
       password: req.body.password,
     })
+
     .then(async (response: any) => {
       res.status(200).json({ response: response });
     })

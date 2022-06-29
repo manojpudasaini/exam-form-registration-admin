@@ -3,7 +3,6 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import {
-  Box,
   Button,
   Flex,
   FormControl,
@@ -13,7 +12,6 @@ import {
   Input,
   Select,
   SimpleGrid,
-  Stack,
   useToast,
   VStack,
 } from "@chakra-ui/react";
@@ -109,6 +107,7 @@ function StudentRegistration() {
     })
       .then(async (response: any) => {
         console.log(response, "api response");
+
         await API.post("http://localhost:5000/api/v1/student/create", {
           name: studentDetails.name,
           program: studentDetails.program,
@@ -120,7 +119,6 @@ function StudentRegistration() {
           firebase_id: response?.response?.uid,
         })
           .then((res) => {
-            console.log(res);
             toast({
               title: "Account created successfully",
               status: "success",
