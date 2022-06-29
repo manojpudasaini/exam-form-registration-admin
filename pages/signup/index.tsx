@@ -85,7 +85,7 @@ function getBase64(file: any) {
   });
 }
 function StudentRegistration() {
-  const [avatarUrl, setAvatarUrl] = useState<any>();
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -97,9 +97,9 @@ function StudentRegistration() {
   const toast = useToast();
 
   const formSubmit = async (data: LoginFormInputs) => {
-    const base64 = await getBase64(data.photo[0]);
-    setAvatarUrl(base64);
-    const studentDetails = { ...data, photo: avatarUrl };
+    const base64URL = await getBase64(data.photo[0]);
+    // console.log(base64URL);
+    const studentDetails = { ...data, photo: base64URL };
     console.log(studentDetails, "my console data is coming here");
     await API.post("/api/student", {
       email: data.email,
@@ -112,13 +112,14 @@ function StudentRegistration() {
           name: studentDetails.name,
           program: studentDetails.program,
           registrationNumber: studentDetails.registration_number,
-          photo: avatarUrl,
+          photo: base64URL,
           symbolNumber: studentDetails.symbol_number,
           phone: studentDetails.phone_number,
           email: studentDetails.email,
           firebase_id: response?.response?.uid,
         })
           .then((res) => {
+            router.push("/login");
             toast({
               title: "Account created successfully",
               status: "success",
@@ -144,7 +145,7 @@ function StudentRegistration() {
 
   const { user } = useContext(AuthContext);
   console.log(user, "user in reg page");
-  const router = useRouter();
+
   useEffect(() => {
     if (user) {
       router.push("/");
@@ -254,7 +255,7 @@ function StudentRegistration() {
                 isInvalid={!!errors?.passwordConfirmation?.message}
                 isRequired
               >
-                <FormLabel>Re-Enter Password</FormLabel>
+                <FormLabel>Confirm Password</FormLabel>
                 <Input
                   type="password"
                   placeholder="confirm password"
@@ -285,6 +286,7 @@ function StudentRegistration() {
                 <FormLabel>Upload your photo</FormLabel>
                 <Input
                   type="file"
+                  multiple={false}
                   accept={"image/*"}
                   {...register("photo")}
                   htmlSize={120}
