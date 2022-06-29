@@ -33,7 +33,8 @@ const Sidebar = () => {
       width={"full"}
       bg={"gray.50"}
       shadow={"sm"}
-      h={"100vh"}
+      height={"80vh"}
+      minHeight={"100%"}
       px={4}
       py={2}
       align={"start"}
