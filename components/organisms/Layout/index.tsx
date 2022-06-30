@@ -12,7 +12,7 @@ interface LayoutProps {
 const Layout = ({ children, user }: LayoutProps) => {
   console.log(user, "layout user");
   return (
-    <VStack w={"full"} spacing={0} position={"relative"} h={"100%"}>
+    <VStack w={"full"} spacing={1} position={"relative"} h={"100%"}>
       {user && <Header />}
 
       <HStack w={"full"} align={"stretch"}>
