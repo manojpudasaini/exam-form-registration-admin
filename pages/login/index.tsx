@@ -88,7 +88,7 @@ const Login = () => {
       </Flex>
       <Box
         shadow={"2xl"}
-        p={{ base: "2", sm: "5" }}
+        p={{ base: "3", sm: "5" }}
         rounded={"lg"}
         w={{ base: "full", sm: "md", md: "lg" }}
         bg={"white"}
