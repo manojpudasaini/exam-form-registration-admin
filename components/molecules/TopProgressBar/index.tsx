@@ -53,7 +53,7 @@ window.fetch = async function (...args) {
     }
   }
 };
-
+// eslint-disable-next-line react/display-name
 export default function () {
   return null;
 }

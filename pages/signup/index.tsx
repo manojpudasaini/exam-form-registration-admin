@@ -161,7 +161,13 @@ function StudentRegistration() {
         px={{ base: "2", lg: 40 }}
         py={"3"}
       >
-        <Image src={"/logo.png"} height={100} width={100} objectFit="contain" />
+        <Image
+          src={"/logo.png"}
+          height={100}
+          width={100}
+          objectFit="contain"
+          alt="EEC"
+        />
         <Heading
           color={"blue.500"}
           as="h2"

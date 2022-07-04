@@ -118,8 +118,8 @@ const Home: NextPage = () => {
                       </Tr>
                     </Thead>
                     <Tbody>
-                      {subject?.map((sub: any) => (
-                        <Tr>
+                      {subject?.map((sub: any, key: any) => (
+                        <Tr key={key}>
                           <Td>{sub.code}</Td>
                           <Td>{sub.name}</Td>
                           <Td isNumeric>{sub.semester}</Td>
