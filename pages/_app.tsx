@@ -4,6 +4,16 @@ import Layout from "../components/organisms/Layout";
 import { AuthProvider } from "../utils/AuthContext";
 import { useEffect, useState } from "react";
 import { auth } from "../utils/firebase-config";
+import "nprogress/nprogress.css";
+import dynamic from "next/dynamic";
+import theme from "../theme";
+
+const TopProgressBar = dynamic(
+  () => {
+    return import("../components/molecules/TopProgressBar");
+  },
+  { ssr: false }
+);
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [user, setUser] = useState<any>();
@@ -23,7 +33,8 @@ function MyApp({ Component, pageProps }: AppProps) {
   }, []);
   console.log(user, "user in app ");
   return (
-    <ChakraProvider>
+    <ChakraProvider theme={theme}>
+      <TopProgressBar />
       <AuthProvider>
         <Layout user={user}>
           <Component {...pageProps} />

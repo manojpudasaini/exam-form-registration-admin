@@ -98,7 +98,7 @@ function StudentRegistration() {
 
   const formSubmit = async (data: LoginFormInputs) => {
     const base64URL = await getBase64(data.photo[0]);
-    // console.log(base64URL);
+    console.log(base64URL, "THIS IS BASE64 URL");
     const studentDetails = { ...data, photo: base64URL };
     console.log(studentDetails, "my console data is coming here");
     await API.post("/api/student", {
@@ -152,7 +152,7 @@ function StudentRegistration() {
     }
   }, [user]);
   return (
-    <Flex direction={"column"} bg={"gray.100"} h={"100vh"}>
+    <Flex direction={"column"} bg={"gray.100"} pb={10}>
       <Flex
         align={"center"}
         gap={{ base: "2", md: "10" }}

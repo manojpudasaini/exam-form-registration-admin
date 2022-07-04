@@ -20,7 +20,7 @@ const LinkItems: Array<LinkItemProps> = [
   { name: "Home", link: "/", icon: FiHome },
   {
     name: "Apply for Examination",
-    link: "/student-registration",
+    link: "/#",
     icon: FiTrendingUp,
   },
   // { name: "", icon: FiCompass },
@@ -48,7 +48,13 @@ const Sidebar = () => {
         direction={"column"}
       >
         {LinkItems.map((link) => (
-          <NavItem key={link.name} icon={link.icon} link={link.link}>
+          <NavItem
+            key={link.name}
+            icon={link.icon}
+            link={link.link}
+            fontWeight="semibold"
+            color="blue.500"
+          >
             {link.name}
           </NavItem>
         ))}

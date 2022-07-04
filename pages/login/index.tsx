@@ -12,7 +12,7 @@ import {
 } from "@chakra-ui/react";
 
 import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { auth } from "../../utils/firebase-config";
 import { useRouter } from "next/router";
@@ -31,7 +31,7 @@ const Login = () => {
   } = useForm({
     mode: "all",
   });
-  const { setUser } = useContext(AuthContext);
+  const { setUser, user } = useContext(AuthContext);
   const loginHandler = async (data: any) => {
     try {
       await signInWithEmailAndPassword(auth, data?.email, data?.password);
@@ -57,7 +57,11 @@ const Login = () => {
       });
     }
   };
-
+  useEffect(() => {
+    if (user) {
+      router.push("/");
+    }
+  }, [user]);
   return (
     <Flex
       align={"center"}
