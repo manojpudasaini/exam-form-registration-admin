@@ -137,7 +137,7 @@ const Home: NextPage = () => {
         </Flex>
         <Flex
           bg="blue.50"
-          w="500px"
+          w={{ base: "full", md: "500px" }}
           rounded="lg"
           align="center"
           justify={"center"}
