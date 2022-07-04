@@ -1132,6 +1132,36 @@
   resolved "https://registry.yarnpkg.com/@firebase/webchannel-wrapper/-/webchannel-wrapper-0.6.2.tgz#6d05fa126104c9907573364dc04147b89b530e15"
   integrity sha512-zThUKcqIU6utWzM93uEvhlh8qj8A5LMPFJPvk/ODb+8GSSif19xM2Lw1M2ijyBy8+6skSkQBbavPzOU5Oh/8tQ==
 
+"@fontsource/gravitas-one@^4.5.8":
+  version "4.5.8"
+  resolved "https://registry.yarnpkg.com/@fontsource/gravitas-one/-/gravitas-one-4.5.8.tgz#1e1e4fe969662df2a352ddc37e8f030e54e9512b"
+  integrity sha512-5C3S7HJxcyntGygC+FDaFQnTa7wEGCd0i1eLXPcRgIcRssvRfy5DFVSp1Tmio4fBkUq/J33UzR+ahVnotRAEKQ==
+
+"@fontsource/lato@^4.5.8":
+  version "4.5.8"
+  resolved "https://registry.yarnpkg.com/@fontsource/lato/-/lato-4.5.8.tgz#20acb60d0895cc82723b4999492c70b1f9816460"
+  integrity sha512-IoSvhhzHsSzJu5XEOmDqzqcSmtfcJ788nz2TDgGXac076DApUsYIPHHBd0dh9guMBIVuHZ8Y2dlXNHFl4bCyLA==
+
+"@fontsource/lora@^4.5.10":
+  version "4.5.10"
+  resolved "https://registry.yarnpkg.com/@fontsource/lora/-/lora-4.5.10.tgz#9b876c9c5acbe0fa9c3447cae7f6178787e1ba6c"
+  integrity sha512-STHlJKDMu6ma0kov3NRU7Z7VpqFl/87jZPooK7NyxqN0BOFnMkUQ7GS7qOJowFMdHRm69dkUvckaIoOWlSbe5Q==
+
+"@fontsource/orelega-one@^4.5.8":
+  version "4.5.8"
+  resolved "https://registry.yarnpkg.com/@fontsource/orelega-one/-/orelega-one-4.5.8.tgz#76a2f9d366e8e087ae8273c15dcfa70945a2520c"
+  integrity sha512-YfgvNckRv4Mw4taHcS+uZtF5Qh26mkosSUjLO/D/zsxnrLw8KA5F0idyE2Fb+BVtLTMKkwJi0DPsG3FHqvVQOw==
+
+"@fontsource/poppins@^4.5.8":
+  version "4.5.8"
+  resolved "https://registry.yarnpkg.com/@fontsource/poppins/-/poppins-4.5.8.tgz#65ce9b32f31bda5a25c23001bcebf1c66e440320"
+  integrity sha512-HE9yLDxYJEcxooVrYvvEhtyxaYU32hQIx1+npKegVefceE0l0zi0ePqKWWxYxkFpyy6WuZSQ+9rai3INnYKEJA==
+
+"@fontsource/source-serif-pro@^4.5.8":
+  version "4.5.8"
+  resolved "https://registry.yarnpkg.com/@fontsource/source-serif-pro/-/source-serif-pro-4.5.8.tgz#41e8c83b5740c73524806b9a2571c60e20b4d003"
+  integrity sha512-dhkcOZIdYsmQA1FjSsYT8grH7r9db6S3IxEnJW3l9z8+fNNcP4qF/RymbHZ4cfcV+h1xBUhdgo+WIcRovRBegw==
+
 "@google-cloud/firestore@^5.0.2":
   version "5.0.2"
   resolved "https://registry.yarnpkg.com/@google-cloud/firestore/-/firestore-5.0.2.tgz#36923fde45987f928a220d347f341c5602f9e340"

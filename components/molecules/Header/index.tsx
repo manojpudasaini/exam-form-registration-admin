@@ -134,11 +134,13 @@ const Header = () => {
             }}
           >
             <HStack>
-              <Avatar
-                src={fetchUser?.photo}
-                name={fetchUser?.name}
-                size={{ base: "xs", md: "sm" }}
-              />
+              <Box>
+                <Avatar
+                  src={fetchUser?.photo}
+                  name={fetchUser?.name}
+                  size={{ base: "xs", md: "sm" }}
+                />
+              </Box>
               <Text>{fetchUser?.name}</Text>
             </HStack>
           </MenuButton>
