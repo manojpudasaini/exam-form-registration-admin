@@ -24,9 +24,9 @@ const Layout = ({ children, user }: LayoutProps) => {
 
         <div style={{ width: "100%", padding: "0 8px 0 8px" }}>{children}</div>
       </HStack>
-      {/* <Box position={"absolute"} bottom={0} w={"full"}>
+      <Box position={"absolute"} bottom={0} w={"full"}>
         <Footer />
-      </Box> */}
+      </Box>
     </VStack>
   );
 };

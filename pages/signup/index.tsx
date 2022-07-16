@@ -22,16 +22,17 @@ import { useRouter } from "next/router";
 
 const programOptions = [
   {
-    option: "BE-Information Technlogy",
-    value: "BE-IT",
+    option: "BE-Civil",
+    value: "BE-Civil",
   },
+
   {
     option: "BE-Computer",
     value: "BE-Com",
   },
   {
-    option: "BE-Civil",
-    value: "BE-Civil",
+    option: "BE-Information Technlogy",
+    value: "BE-IT",
   },
 ];
 const validationSchema = yup.object().shape({
