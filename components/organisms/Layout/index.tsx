@@ -22,7 +22,9 @@ const Layout = ({ children, user }: LayoutProps) => {
           </Flex>
         )}
 
-        <div style={{ width: "100%", padding: "0 8px 0 8px" }}>{children}</div>
+        <div style={{ width: "100%", padding: "0 8px 0 8px", height: "85vh" }}>
+          {children}
+        </div>
       </HStack>
       <Box position={"absolute"} bottom={0} w={"full"}>
         <Footer />

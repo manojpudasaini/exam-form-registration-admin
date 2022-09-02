@@ -7,6 +7,7 @@ import { auth } from "../utils/firebase-config";
 import "nprogress/nprogress.css";
 import dynamic from "next/dynamic";
 import theme from "../theme";
+import { FormProvider, useFormData } from "../utils/FormContext";
 
 const TopProgressBar = dynamic(
   () => {
@@ -32,13 +33,17 @@ function MyApp({ Component, pageProps }: AppProps) {
     initialLoad();
   }, []);
   console.log(user, "user in app ");
+  const { data } = useFormData();
+  console.log(data, "data from form context");
   return (
     <ChakraProvider theme={theme}>
       <TopProgressBar />
       <AuthProvider>
-        <Layout user={user}>
-          <Component {...pageProps} />
-        </Layout>
+        <FormProvider>
+          <Layout user={user}>
+            <Component {...pageProps} />
+          </Layout>
+        </FormProvider>
       </AuthProvider>
     </ChakraProvider>
   );

@@ -1,9 +1,14 @@
 import { ArrowBackIcon, ArrowForwardIcon } from "@chakra-ui/icons";
 import { Button, Flex } from "@chakra-ui/react";
 import { Step, Steps, useSteps } from "chakra-ui-steps";
+import PersonalInfo from "../../components/molecules/Forms/PersonalInfo";
 import PrivateRoute from "../../withPrivateRoute";
 
-const content1 = <Flex py={4}>step1</Flex>;
+const content1 = (
+  <Flex py={4}>
+    <PersonalInfo />
+  </Flex>
+);
 const content2 = <Flex py={4}>step2</Flex>;
 const content3 = <Flex py={4}>step3</Flex>;
 

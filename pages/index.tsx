@@ -42,7 +42,7 @@ const Home: NextPage = () => {
   const fetchSubjects = async () => {
     await API.get("http://localhost:5000/api/v1/subject/getall").then((res) => {
       console.log(res, "fetched subject<<<<<<<");
-      setSubjects(res);
+      setSubjects(res?.data);
     });
   };
   useEffect(() => {
@@ -118,16 +118,17 @@ const Home: NextPage = () => {
                       </Tr>
                     </Thead>
                     <Tbody>
-                      {subject?.map((sub: any, key: any) => (
-                        <Tr key={key}>
-                          <Td>{sub.code}</Td>
-                          <Td>{sub.name}</Td>
-                          <Td isNumeric>{sub.semester}</Td>
-                          <Td isNumeric>{sub.credits}</Td>
-                          <Td>{sub?.barriers?.barrier}</Td>
-                          <Td>{sub?.concurrents?.concurrent}</Td>
-                        </Tr>
-                      ))}
+                      {subject?.length > 0 &&
+                        subject?.map((sub: any, key: any) => (
+                          <Tr key={key}>
+                            <Td>{sub.code}</Td>
+                            <Td>{sub.name}</Td>
+                            <Td isNumeric>{sub.semester}</Td>
+                            <Td isNumeric>{sub.credits}</Td>
+                            <Td>{sub?.barriers?.barrier}</Td>
+                            <Td>{sub?.concurrents?.concurrent}</Td>
+                          </Tr>
+                        ))}
                     </Tbody>
                   </Table>
                 </TableContainer>
