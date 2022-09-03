@@ -42,6 +42,7 @@ const validationSchema = yup.object().shape({
     .required("This field is mandatory")
     .email("invalid email"),
   program: yup.string().required("select your program"),
+
   symbol_number: yup
     .string()
     .required("This field is mandatory")
@@ -193,7 +194,7 @@ function StudentRegistration() {
             <SimpleGrid columns={[1, null, 2]} gap={6}>
               <FormControl isInvalid={!!errors?.name?.message} isRequired>
                 <FormLabel>Name</FormLabel>
-                <Input type="name" placeholder="Name" {...register("name")} />
+                <Input id="name" placeholder="Name" {...register("name")} />
                 <FormErrorMessage>{errors?.name?.message}</FormErrorMessage>
               </FormControl>
               <FormControl isInvalid={!!errors?.program?.message} isRequired>
