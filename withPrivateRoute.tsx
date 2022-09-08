@@ -1,16 +1,8 @@
 import React, { useContext, useEffect } from "react";
 import Router from "next/router";
-// import { Spin } from "antd";
 
 import { AuthContext } from "./utils/AuthContext";
 import { Flex, Spinner } from "@chakra-ui/react";
-
-// const LoaderWrapper = styled.div`
-//   min-height: 100vh;
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-// `;
 
 const PrivateRoute = (AuthComponent: any) => {
   function PrivateComponent({ children }: any) {

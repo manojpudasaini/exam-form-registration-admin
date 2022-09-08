@@ -9,6 +9,7 @@ import {
   FormErrorMessage,
   FormLabel,
   Heading,
+  IconButton,
   Input,
   Select,
   SimpleGrid,
@@ -19,19 +20,21 @@ import { API } from "../../utils/api";
 import { AuthContext } from "../../utils/AuthContext";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { ArrowBackIcon } from "@chakra-ui/icons";
 
 const programOptions = [
   {
-    option: "BE-Information Technlogy",
-    value: "BE-IT",
+    option: "BE-Civil",
+    value: "BE-Civil",
   },
+
   {
     option: "BE-Computer",
     value: "BE-Com",
   },
   {
-    option: "BE-Civil",
-    value: "BE-Civil",
+    option: "BE-Information Technlogy",
+    value: "BE-IT",
   },
 ];
 const validationSchema = yup.object().shape({
@@ -41,6 +44,7 @@ const validationSchema = yup.object().shape({
     .required("This field is mandatory")
     .email("invalid email"),
   program: yup.string().required("select your program"),
+
   symbol_number: yup
     .string()
     .required("This field is mandatory")
@@ -161,6 +165,15 @@ function StudentRegistration() {
         px={{ base: "2", lg: 40 }}
         py={"3"}
       >
+        <Button
+          mr={{ md: "4" }}
+          leftIcon={<ArrowBackIcon />}
+          size={{ base: "md", md: "lg" }}
+          colorScheme={"blue"}
+          rounded="full"
+          aria-label="back"
+          onClick={() => router.push("/login")}
+        ></Button>
         <Image
           src={"/logo.png"}
           height={100}
@@ -192,7 +205,7 @@ function StudentRegistration() {
             <SimpleGrid columns={[1, null, 2]} gap={6}>
               <FormControl isInvalid={!!errors?.name?.message} isRequired>
                 <FormLabel>Name</FormLabel>
-                <Input type="name" placeholder="Name" {...register("name")} />
+                <Input id="name" placeholder="Name" {...register("name")} />
                 <FormErrorMessage>{errors?.name?.message}</FormErrorMessage>
               </FormControl>
               <FormControl isInvalid={!!errors?.program?.message} isRequired>

@@ -7,6 +7,7 @@ import {
   FormLabel,
   Heading,
   Input,
+  Text,
   useToast,
   VStack,
 } from "@chakra-ui/react";
@@ -156,6 +157,7 @@ const Login = () => {
           Not registered? Create an account
         </Button>
       </Box>
+      
     </Flex>
   );
 };

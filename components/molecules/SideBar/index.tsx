@@ -20,7 +20,7 @@ const LinkItems: Array<LinkItemProps> = [
   { name: "Home", link: "/", icon: FiHome },
   {
     name: "Apply for Examination",
-    link: "/#",
+    link: "/apply",
     icon: FiTrendingUp,
   },
   // { name: "", icon: FiCompass },

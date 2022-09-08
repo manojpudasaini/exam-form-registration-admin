@@ -3,11 +3,11 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <Center bg={"gray.50"} p={2}>
-      <Text color={"gray.600"} fontWeight={"semibold"}>
-        &#169; Everest Engineering College 2022{" "}
+    <Flex direction={"column"} align="center" justify={"center"}>
+      <Text color="gray.500" opacity={0.7} fontWeight={"semibold"}>
+        &copy; EEC 2022
       </Text>
-    </Center>
+    </Flex>
   );
 };
 
