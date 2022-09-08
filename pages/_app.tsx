@@ -8,7 +8,7 @@ import "nprogress/nprogress.css";
 import dynamic from "next/dynamic";
 import theme from "../theme";
 import { FormProvider, useFormData } from "../utils/FormContext";
-
+import "../styles/globals.css";
 const TopProgressBar = dynamic(
   () => {
     return import("../components/molecules/TopProgressBar");

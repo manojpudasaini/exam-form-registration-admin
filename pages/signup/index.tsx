@@ -9,6 +9,7 @@ import {
   FormErrorMessage,
   FormLabel,
   Heading,
+  IconButton,
   Input,
   Select,
   SimpleGrid,
@@ -19,6 +20,7 @@ import { API } from "../../utils/api";
 import { AuthContext } from "../../utils/AuthContext";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { ArrowBackIcon } from "@chakra-ui/icons";
 
 const programOptions = [
   {
@@ -163,6 +165,15 @@ function StudentRegistration() {
         px={{ base: "2", lg: 40 }}
         py={"3"}
       >
+        <Button
+          mr={{ md: "4" }}
+          leftIcon={<ArrowBackIcon />}
+          size={{ base: "md", md: "lg" }}
+          colorScheme={"blue"}
+          rounded="full"
+          aria-label="back"
+          onClick={() => router.push("/login")}
+        ></Button>
         <Image
           src={"/logo.png"}
           height={100}

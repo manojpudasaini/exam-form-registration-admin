@@ -15,7 +15,7 @@ const Layout = ({ children, user }: LayoutProps) => {
     <VStack w={"full"} spacing={1} position={"relative"} h={"100%"}>
       {user && <Header />}
 
-      <HStack w={"full"} align={"stretch"}>
+      <HStack w={"full"} align={"stretch"} height="100%">
         {user && (
           <Flex w={"sm"} display={{ base: "none", lg: "flex" }}>
             <Sidebar />

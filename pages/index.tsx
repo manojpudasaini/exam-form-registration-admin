@@ -42,7 +42,7 @@ const Home: NextPage = () => {
   const fetchSubjects = async () => {
     await API.get("http://localhost:5000/api/v1/subject/getall").then((res) => {
       console.log(res, "fetched subject<<<<<<<");
-      setSubjects(res?.data);
+      setSubjects(res);
     });
   };
   useEffect(() => {
