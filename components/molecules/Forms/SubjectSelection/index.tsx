@@ -25,6 +25,7 @@ import { useFormData } from "../../../../utils/FormContext";
 const SubjectSelection = () => {
   const [subupto, setSubupto] = useState([]);
   const [subjects, setSubjects] = useState([]);
+  const [regular, setRegular] = useState<any>([]);
   const { data } = useFormData();
   const GetSubjectsUptoCurrentSem = async () => {
     const response: any = await API.get(
@@ -42,54 +43,35 @@ const SubjectSelection = () => {
 
   useEffect(() => {
     GetSubjectsUptoCurrentSem();
-  }, []);
-  const {
-    handleSubmit,
-    register,
-    formState: { errors, isSubmitting },
-  } = useForm({ mode: "all" });
-  const submitHandler = (values: any) => {
-    const sub = new Object(values);
-    console.log(values, "checked subjects");
-    console.log(sub, "sub>>>>>>>>>>>>.....");
+    getSubjectCredit();
+  }, [regular]);
+
+  const submitHandler = () => {};
+  console.log(regular, "regular");
+  let credit = 0;
+  const getSubjectCredit = async () => {
+    regular?.map((sub: any) =>
+      API.get("http://localhost:5000/api/v1/subject/getByCode/" + sub).then(
+        (credit = credit + sub.credits)
+      )
+    );
   };
+  console.log(credit, "credit>>>");
   return (
     <div>
       <Box>
         <Heading my="2">Regular Courses</Heading>
-        {/* <TableContainer>
-          <Table>
-            <Thead>
-              <Tr>
-                <Th>Ongoing Subjects</Th>
-                <Th>Code</Th>
-                <Th>Credits</Th>
-              </Tr>
-            </Thead>
-            <Tbody>
-              {subjects?.length > 0 &&
-                subjects?.map((sub: any, key: any) => (
-                  <Tr key={key}>
-                    <Td>{sub?.name}</Td>
-                    <Td>{sub?.code}</Td>
-                    <Td isNumeric>{sub?.credits}</Td>
-                  </Tr>
-                ))}
-            </Tbody>
-          </Table>
-        </TableContainer> */}
-        <form onSubmit={handleSubmit(submitHandler)}>
-          <VStack>
+
+        <VStack>
+          <CheckboxGroup onChange={(data: any) => setRegular(data)}>
             {subjects?.map((sub: any, key: any) => (
-              <FormControl key={key}>
-                <Checkbox value={sub?.code} {...register(`${sub}`)}>
-                  {sub?.name}
-                </Checkbox>
-              </FormControl>
+              <Checkbox key={key} value={sub?.code}>
+                {sub?.name}
+              </Checkbox>
             ))}
-          </VStack>
-          <Button type="submit">submit</Button>
-        </form>
+          </CheckboxGroup>
+        </VStack>
+        <Button onClick={submitHandler}>submit</Button>
       </Box>
     </div>
   );
