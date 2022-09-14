@@ -22,17 +22,17 @@ const SubjectSelection = () => {
   const { data } = useFormData();
   const GetSubjectsUptoCurrentSem = async () => {
     const response: any = await API.get(
-      "http://localhost:5000/api/v1/subject/getuptosem/" + data.semester
+      "/subject/getuptosem/" + data.semester
     );
     const subject: any = await API.get(
-      "http://localhost:5000/api/v1/subject/getbysem/" + data.semester
+      "/subject/getbysem/" + data.semester
     );
     setSubupto(response?.data);
     setSubjects(subject?.data);
   };
   const getCodeCredits = async () => {
     const response: any = await API.get(
-      "http://localhost:5000/api/v1/subject/getcodecredit"
+      "/subject/getcodecredit"
     );
     setSubjectWithCredits(response);
   };

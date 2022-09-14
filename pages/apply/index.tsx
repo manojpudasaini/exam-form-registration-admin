@@ -44,7 +44,7 @@ const ApplyForm = () => {
           </Button>
         </Flex>
       ) : (
-        <Flex width="100%" justify="flex-end">
+        <Flex width="100%" justify="flex-end" mb="8">
           <Button
             isDisabled={activeStep === 0}
             mr={4}

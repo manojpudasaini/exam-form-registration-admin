@@ -9,6 +9,7 @@ import {
   FiStar,
   FiSettings,
   FiMenu,
+  FiUpload,
 } from "react-icons/fi";
 import NavItem from "../NavItem";
 interface LinkItemProps {
@@ -23,7 +24,7 @@ const LinkItems: Array<LinkItemProps> = [
     link: "/apply",
     icon: FiTrendingUp,
   },
-  // { name: "", icon: FiCompass },
+  { name: "Uploads", link: "/uploads", icon: FiUpload },
   // { name: "Favourites", icon: FiStar },
   // { name: "Settings", icon: FiSettings },
 ];

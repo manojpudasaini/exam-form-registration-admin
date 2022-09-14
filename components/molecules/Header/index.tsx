@@ -48,7 +48,7 @@ const Header = () => {
   };
   const fetchUserFromDB = async () => {
     await API.get(
-      `http://localhost:5000/api/v1/student/getByfirebase/` + user?.uid
+      `/student/getByfirebase/` + user?.uid
     ).then((res) => {
       console.log(res, ">>>>>>>>>>>>response after fetch");
       setFetchUser(res);

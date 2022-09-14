@@ -112,7 +112,7 @@ function StudentRegistration() {
       .then(async (response: any) => {
         console.log(response, "api response");
 
-        await API.post("http://localhost:5000/api/v1/student/create", {
+        await API.post("/student/create", {
           name: studentDetails.name,
           program: studentDetails.program,
           registrationNumber: studentDetails.registration_number,
