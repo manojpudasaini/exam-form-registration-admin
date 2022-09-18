@@ -9,6 +9,7 @@ import {
   FiStar,
   FiSettings,
   FiMenu,
+  FiUpload,
 } from "react-icons/fi";
 import NavItem from "../NavItem";
 interface LinkItemProps {
@@ -23,7 +24,7 @@ const LinkItems: Array<LinkItemProps> = [
     link: "/apply",
     icon: FiTrendingUp,
   },
-  // { name: "", icon: FiCompass },
+  { name: "Uploads", link: "/uploads", icon: FiUpload },
   // { name: "Favourites", icon: FiStar },
   // { name: "Settings", icon: FiSettings },
 ];
@@ -33,8 +34,8 @@ const Sidebar = () => {
       width={"full"}
       bg={"gray.50"}
       shadow={"sm"}
-      height={"88vh"}
-      minHeight={"100%"}
+      // height={"88vh"}
+      // minHeight={"100%"}
       px={4}
       py={2}
       align={"start"}

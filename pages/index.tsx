@@ -32,15 +32,13 @@ const Home: NextPage = () => {
   const [fetchUser, setFetchUser] = useState<any>();
   const [subject, setSubjects] = useState<any>();
   const fetchUserFromDB = async () => {
-    await API.get(
-      `http://localhost:5000/api/v1/student/getByfirebase/` + user?.uid
-    ).then((res) => {
+    await API.get(`/student/getByfirebase/` + user?.uid).then((res) => {
       console.log(res, ">>>>>>>>>>>>response after fetch in index");
       setFetchUser(res);
     });
   };
   const fetchSubjects = async () => {
-    await API.get("http://localhost:5000/api/v1/subject/getall").then((res) => {
+    await API.get("/subject/getall").then((res) => {
       console.log(res, "fetched subject<<<<<<<");
       setSubjects(res);
     });

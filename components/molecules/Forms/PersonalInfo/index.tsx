@@ -1,8 +1,10 @@
 import {
   Box,
   Button,
+  Container,
   FormControl,
   FormErrorMessage,
+  FormHelperText,
   FormLabel,
   Input,
   Modal,
@@ -71,7 +73,7 @@ const PersonalInfo = () => {
   const FetchUserFromDB = async () => {
     try {
       const response: any = await API.get(
-        `http://localhost:5000/api/v1/student/getByfirebase/` + user?.uid
+        `/student/getByfirebase/` + user?.uid
       );
       console.log(response, "response from db");
       setFetchedUser(response);
@@ -89,8 +91,12 @@ const PersonalInfo = () => {
   return (
     <Box>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Box width={"lg"}>
-          <SimpleGrid gap={4} minChildWidth={"300px"}>
+        <Box width={{ base: "full", md: "xl" }}>
+          <SimpleGrid
+            gap={"16px"}
+            minChildWidth={"280px"}
+            columns={{ base: 1, md: 2 }}
+          >
             <FormControl isInvalid={!!errors?.name?.message} isRequired>
               <FormLabel>Name</FormLabel>
               <Input
@@ -112,6 +118,9 @@ const PersonalInfo = () => {
                 {...register("semester")}
                 defaultValue={data?.semester || fetchedUser?.semester}
               />
+              <FormHelperText fontWeight={"semibold"} color="blue.500">
+                (please enter your current semester)
+              </FormHelperText>
               <FormErrorMessage>
                 {errors?.symbol_number?.message}
               </FormErrorMessage>
@@ -168,12 +177,20 @@ const PersonalInfo = () => {
                 {fetchedUser?.photo && (
                   <Image
                     src={fetchedUser?.photo}
-                    height={200}
-                    width={200}
+                    height={140}
+                    width={140}
                     alt="user-photo"
                   />
                 )}
-                <Button onClick={ImageUploadHandler}>Change photo</Button>
+                <Button
+                  onClick={ImageUploadHandler}
+                  variant="link"
+                  colorScheme={"blue"}
+                  size="sm"
+                  mt="1"
+                >
+                  Change photo
+                </Button>
               </VStack>
               <FormErrorMessage>{errors?.photo?.message}</FormErrorMessage>
             </FormControl>

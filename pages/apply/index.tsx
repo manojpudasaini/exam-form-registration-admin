@@ -19,7 +19,7 @@ const content3 = <Flex py={4}>step3</Flex>;
 
 const steps = [
   { label: "Your Details", content: content1 },
-  { label: "Step 2", content: content2 },
+  { label: "Select Subjects", content: content2 },
   { label: "Step 3", content: content3 },
 ];
 
@@ -44,7 +44,7 @@ const ApplyForm = () => {
           </Button>
         </Flex>
       ) : (
-        <Flex width="100%" justify="flex-end">
+        <Flex width="100%" justify="flex-end" mb="8">
           <Button
             isDisabled={activeStep === 0}
             mr={4}

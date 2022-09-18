@@ -47,9 +47,7 @@ const Header = () => {
       });
   };
   const fetchUserFromDB = async () => {
-    await API.get(
-      `http://localhost:5000/api/v1/student/getByfirebase/` + user?.uid
-    ).then((res) => {
+    await API.get(`/student/getByfirebase/` + user?.uid).then((res) => {
       console.log(res, ">>>>>>>>>>>>response after fetch");
       setFetchUser(res);
     });
@@ -68,7 +66,7 @@ const Header = () => {
       shadow="md"
       align={"center"}
       px={2}
-      py={10}
+      py={12}
       justify={"space-between"}
     >
       <Box display={{ base: "block", lg: "none" }} px={2}>
@@ -76,6 +74,7 @@ const Header = () => {
           aria-label="show menu"
           icon={<HamburgerIcon />}
           onClick={onOpen}
+          colorScheme="blue"
         />
         <Drawer placement={"left"} onClose={onClose} isOpen={isOpen}>
           <DrawerOverlay />
@@ -133,15 +132,17 @@ const Header = () => {
               bg: "blue.100",
             }}
           >
-            <HStack>
+            <HStack px="2">
               <Box>
                 <Avatar
                   src={fetchUser?.photo}
                   name={fetchUser?.name}
-                  size={{ base: "xs", md: "sm" }}
+                  size={"sm"}
                 />
               </Box>
-              <Text>{fetchUser?.name}</Text>
+              <Text color="blue.500" fontSize="sm">
+                {fetchUser?.name}
+              </Text>
             </HStack>
           </MenuButton>
           <MenuList p="1" rounded="md">
