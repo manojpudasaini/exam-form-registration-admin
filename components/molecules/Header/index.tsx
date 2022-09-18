@@ -47,9 +47,7 @@ const Header = () => {
       });
   };
   const fetchUserFromDB = async () => {
-    await API.get(
-      `/student/getByfirebase/` + user?.uid
-    ).then((res) => {
+    await API.get(`/student/getByfirebase/` + user?.uid).then((res) => {
       console.log(res, ">>>>>>>>>>>>response after fetch");
       setFetchUser(res);
     });
@@ -139,7 +137,7 @@ const Header = () => {
                 <Avatar
                   src={fetchUser?.photo}
                   name={fetchUser?.name}
-                  size={{ base: "xs", md: "sm" }}
+                  size={"sm"}
                 />
               </Box>
               <Text color="blue.500" fontSize="sm">

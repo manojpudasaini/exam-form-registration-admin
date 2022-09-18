@@ -4,16 +4,28 @@ import {
   Checkbox,
   CheckboxGroup,
   Divider,
+  Flex,
   Heading,
+  HStack,
+  Table,
+  TableContainer,
+  Tag,
+  Tbody,
+  Td,
+  Text,
+  Th,
+  Thead,
+  Tr,
   VStack,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
 import { API } from "../../../../utils/api";
 import { useFormData } from "../../../../utils/FormContext";
 // import { subjectWithCredits } from "../../../../utils/subject";
 
 const SubjectSelection = () => {
+  const [totalCredit, setTotalCredit] = useState(0);
+  const [disabledCheck, setDisabledCheck] = useState(false);
   const [subupto, setSubupto] = useState([]);
   const [subjects, setSubjects] = useState([]);
   const [regular, setRegular] = useState<any>([]);
@@ -21,24 +33,17 @@ const SubjectSelection = () => {
   const [subjectWithCredits, setSubjectWithCredits] = useState<any>();
   const { data } = useFormData();
   const GetSubjectsUptoCurrentSem = async () => {
-    const response: any = await API.get(
-      "/subject/getuptosem/" + data.semester
-    );
+    const response: any = await API.get("/subject/getuptosem/" + data.semester);
     const subject: any = await API.get(
-      "/subject/getbysem/" + data.semester
+      `/subject/getcurrentsem/${data.semester} `
     );
     setSubupto(response?.data);
     setSubjects(subject?.data);
   };
   const getCodeCredits = async () => {
-    const response: any = await API.get(
-      "/subject/getcodecredit"
-    );
+    const response: any = await API.get("/subject/getcodecredit");
     setSubjectWithCredits(response);
   };
-  console.log(subupto, "sub upto now");
-  console.log(subjects, "sub>>>>...");
-  console.log(data, "daata from context>>>>>>>>>>>...");
   const giveMeCredit = (subject: any) => {
     const credit = subjectWithCredits?.find(
       (item: any) => item.code == subject
@@ -53,7 +58,9 @@ const SubjectSelection = () => {
       finalCredit = finalSubjects.map((item: any) => giveMeCredit(item));
     }
 
-    console.log(finalCredit.reduce(reducer), "finalCredit>>>>>>>>>");
+    if (finalCredit.length > 0) {
+      setTotalCredit(finalCredit.reduce(reducer));
+    }
   };
 
   useEffect(() => {
@@ -63,35 +70,163 @@ const SubjectSelection = () => {
 
   const submitHandler = () => {
     countCredits();
-    console.log(giveMeCredit("CMP 115"), "cred>>>");
   };
-  console.log(regular, "regular");
+  console.log(regular, "regular>>>");
   console.log(back, "back>>>");
+  console.log(totalCredit, "totalCredits>>>");
+  useEffect(() => {
+    countCredits();
+  }, [regular, back]);
   return (
-    <Box w="full">
+    <Box w="full" position={"relative"}>
+      <Flex
+        shadow={"md"}
+        zIndex={"2"}
+        position={"fixed"}
+        bg={totalCredit <= 24 ? "green.400" : "red.500"}
+        rounded="xl"
+        right="10"
+        top={{ base: "20", sm: "150", lg: "250" }}
+        align="center"
+        justify={"center"}
+        p="4"
+      >
+        <VStack>
+          <Text color="white">Total Credits</Text>
+          <Divider />
+          <Heading color="white">{totalCredit}</Heading>
+        </VStack>
+      </Flex>
       <Heading my="2">Regular Courses</Heading>
       <VStack align="start" gap={4} my={6}>
-        <CheckboxGroup onChange={(data: any) => setRegular(data)}>
-          {subjects?.map((sub: any, key: any) => (
-            <Checkbox key={key} value={sub?.code} size="lg">
-              {sub?.name}
-            </Checkbox>
-          ))}
-        </CheckboxGroup>
+        <TableContainer>
+          <Table>
+            <Thead>
+              <Tr>
+                <Th>Subject</Th>
+                <Th>Code</Th>
+                <Th isNumeric>Credits</Th>
+                <Th>Barrier Subject</Th>
+                <Th>Concurrent Subject</Th>
+              </Tr>
+            </Thead>
+
+            <Tbody>
+              <CheckboxGroup onChange={(data: any) => setRegular(data)}>
+                {subjects?.map((sub: any, key: any) => (
+                  <Tr key={key}>
+                    <Td>
+                      <Checkbox
+                        key={key}
+                        value={sub?.code}
+                        size="lg"
+                        disabled={disabledCheck}
+                      >
+                        <Text fontSize={"sm"} px="2">
+                          {sub?.name}
+                        </Text>
+                      </Checkbox>
+                    </Td>
+                    <Td fontSize={"sm"}>
+                      <Tag colorScheme="cyan">{sub?.code}</Tag>
+                    </Td>
+                    <Td>
+                      <Flex
+                        boxSize="4"
+                        justify={"center"}
+                        align="center"
+                        rounded={"full"}
+                        p="3"
+                        color="white"
+                        backgroundColor={"blue.400"}
+                      >
+                        <Text fontWeight={"semibold"}>{sub?.credits}</Text>
+                      </Flex>
+                    </Td>
+                    <Td fontSize={"sm"}>
+                      {sub?.barrier && (
+                        <Tag colorScheme={"red"}>{sub?.barrier}</Tag>
+                      )}
+                    </Td>
+                    <Td fontSize={"sm"}>
+                      {sub?.concurrent && (
+                        <Tag colorScheme={"yellow"}>{sub?.concurrent}</Tag>
+                      )}
+                    </Td>
+                  </Tr>
+                ))}
+              </CheckboxGroup>
+            </Tbody>
+          </Table>
+        </TableContainer>
       </VStack>
       <Divider w="full" />
       <Heading mt={6}>Re-registered Courses</Heading>
       <VStack align="start" gap={4} my={6}>
-        <CheckboxGroup onChange={(data: any) => setBack(data)}>
-          {subupto?.map((sub: any, key: any) => (
-            <Checkbox key={key} value={sub?.code} size="lg">
-              {sub?.name}
-            </Checkbox>
-          ))}
-        </CheckboxGroup>
+        <TableContainer>
+          <Table>
+            <Thead>
+              <Tr>
+                <Th>Subject</Th>
+                <Th>Code</Th>
+                <Th isNumeric>Credits</Th>
+                <Th>Barrier Subject</Th>
+                <Th>Concurrent Subject</Th>
+              </Tr>
+            </Thead>
+
+            <Tbody>
+              <CheckboxGroup onChange={(data: any) => setBack(data)}>
+                {subupto?.map((sub: any, key: any) => (
+                  <Tr key={key}>
+                    <Td>
+                      <Checkbox
+                        key={key}
+                        value={sub?.code}
+                        size="lg"
+                        isDisabled={disabledCheck}
+                      >
+                        <Text fontSize={"sm"} px="2">
+                          {sub?.name}
+                        </Text>
+                      </Checkbox>
+                    </Td>
+                    <Td fontSize={"sm"}>
+                      <Tag colorScheme="cyan">{sub?.code}</Tag>
+                    </Td>
+                    <Td>
+                      <Flex
+                        boxSize="4"
+                        justify={"center"}
+                        align="center"
+                        rounded={"full"}
+                        p="3"
+                        color="white"
+                        backgroundColor={"blue.400"}
+                      >
+                        <Text fontWeight={"semibold"}>{sub?.credits}</Text>
+                      </Flex>
+                    </Td>
+                    <Td fontSize={"sm"}>
+                      {sub?.barrier && (
+                        <Tag colorScheme={"red"}>{sub?.barrier}</Tag>
+                      )}
+                    </Td>
+                    <Td fontSize={"sm"}>
+                      {sub?.concurrent && (
+                        <Tag colorScheme={"yellow"}>{sub?.concurrent}</Tag>
+                      )}
+                    </Td>
+                  </Tr>
+                ))}
+              </CheckboxGroup>
+            </Tbody>
+          </Table>
+        </TableContainer>
       </VStack>
 
       <Button
+        disabled={totalCredit > 24}
         colorScheme={"blue"}
         size="lg"
         width="300px"

@@ -19,7 +19,7 @@ const content3 = <Flex py={4}>step3</Flex>;
 
 const steps = [
   { label: "Your Details", content: content1 },
-  { label: "Step 2", content: content2 },
+  { label: "Select Subjects", content: content2 },
   { label: "Step 3", content: content3 },
 ];
 
