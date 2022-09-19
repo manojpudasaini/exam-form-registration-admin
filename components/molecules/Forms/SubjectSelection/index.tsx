@@ -24,14 +24,15 @@ import { useFormData } from "../../../../utils/FormContext";
 // import { subjectWithCredits } from "../../../../utils/subject";
 
 const SubjectSelection = () => {
-  const [totalCredit, setTotalCredit] = useState(0);
   const [disabledCheck, setDisabledCheck] = useState(false);
   const [subupto, setSubupto] = useState([]);
   const [subjects, setSubjects] = useState([]);
   const [regular, setRegular] = useState<any>([]);
   const [back, setBack] = useState<any>([]);
   const [subjectWithCredits, setSubjectWithCredits] = useState<any>();
-  const { data } = useFormData();
+  const { data, setFormValues } = useFormData();
+  const [totalCredit, setTotalCredit] = useState(0);
+  const [codeName, setCodeName] = useState<any>();
   const GetSubjectsUptoCurrentSem = async () => {
     const response: any = await API.get("/subject/getuptosem/" + data.semester);
     const subject: any = await API.get(
@@ -43,6 +44,11 @@ const SubjectSelection = () => {
   const getCodeCredits = async () => {
     const response: any = await API.get("/subject/getcodecredit");
     setSubjectWithCredits(response);
+  };
+
+  const getCodeName = async () => {
+    const response: any = await API.get("/subject/getbycode");
+    setCodeName(response);
   };
   const giveMeCredit = (subject: any) => {
     const credit = subjectWithCredits?.find(
@@ -66,10 +72,36 @@ const SubjectSelection = () => {
   useEffect(() => {
     GetSubjectsUptoCurrentSem();
     getCodeCredits();
+    getCodeName();
   }, []);
 
+  const getMeName = (subject: any) => {
+    const name = codeName?.find((item: any) => item.code == subject);
+    return name;
+  };
+  const List = () => {
+    let regList = [];
+    let backList = [];
+    if (regular?.length > 0) {
+      regList = regular?.map((item: any) => ({
+        ...getMeName(item),
+        remarks: "regular",
+      }));
+    }
+    if (back?.length > 0) {
+      backList = back?.map((item: any) => ({
+        ...getMeName(item),
+        remarks: "re-registered",
+      }));
+    }
+    console.log("finalList>>>.", regList, backList);
+    setFormValues({ regular: regList, back: backList });
+  };
+
   const submitHandler = () => {
-    countCredits();
+    List();
+    setFormValues({ totalCredit: totalCredit });
+    // countCredits();
   };
   console.log(regular, "regular>>>");
   console.log(back, "back>>>");
@@ -112,7 +144,10 @@ const SubjectSelection = () => {
             </Thead>
 
             <Tbody>
-              <CheckboxGroup onChange={(data: any) => setRegular(data)}>
+              <CheckboxGroup
+                onChange={(data: any) => setRegular(data)}
+                defaultValue={data?.regular}
+              >
                 {subjects?.map((sub: any, key: any) => (
                   <Tr key={key}>
                     <Td>
@@ -176,7 +211,10 @@ const SubjectSelection = () => {
             </Thead>
 
             <Tbody>
-              <CheckboxGroup onChange={(data: any) => setBack(data)}>
+              <CheckboxGroup
+                onChange={(data: any) => setBack(data)}
+                defaultValue={data?.back}
+              >
                 {subupto?.map((sub: any, key: any) => (
                   <Tr key={key}>
                     <Td>
