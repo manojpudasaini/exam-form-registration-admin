@@ -32,7 +32,7 @@ const SubjectSelection = () => {
   const [back, setBack] = useState<any>([]);
   const [subjectWithCredits, setSubjectWithCredits] = useState<any>();
   const { data, setFormValues } = useFormData();
-  const [totalCredit, setTotalCredit] = useState(0);
+  const [totalCredit, setTotalCredit] = useState<any>(0);
   const [codeName, setCodeName] = useState<any>();
   const GetSubjectsUptoCurrentSem = async () => {
     const response: any = await API.get("/subject/getuptosem/" + data.semester);
@@ -104,7 +104,10 @@ const SubjectSelection = () => {
       var today = new Date().toLocaleDateString("en-us");
       setFormValues({ date: today });
       await List();
-      const response: any = await API.post("/form/create-form", data);
+      const response: any = await API.post(
+        "/form/create-form/" + data?.id,
+        data
+      );
       console.log(response, "response");
     } catch (e) {
       console.log(e);

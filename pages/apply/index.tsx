@@ -3,6 +3,7 @@ import { Button, Flex } from "@chakra-ui/react";
 import { Step, Steps, useSteps } from "chakra-ui-steps";
 import PersonalInfo from "../../components/molecules/Forms/PersonalInfo";
 import SubjectSelection from "../../components/molecules/Forms/SubjectSelection";
+import DownloadForm from "../../components/molecules/Forms/DownloadForm";
 import PrivateRoute from "../../withPrivateRoute";
 
 const content1 = (
@@ -15,7 +16,11 @@ const content2 = (
     <SubjectSelection />
   </Flex>
 );
-const content3 = <Flex py={4}>step3</Flex>;
+const content3 = (
+  <Flex py={4}>
+    <DownloadForm />
+  </Flex>
+);
 
 const steps = [
   { label: "Your Details", content: content1 },

@@ -83,6 +83,7 @@ const PersonalInfo = () => {
         symbolNumber: response?.symbolNumber,
         firebase_id: response?.firebase_id,
         photo: response?.photo,
+        id: response?.firebase_id,
       });
     } catch (error) {
       console.log(error, "error");
