@@ -18,6 +18,7 @@ import {
   Tr,
   VStack,
 } from "@chakra-ui/react";
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { API } from "../../../../utils/api";
 import { useFormData } from "../../../../utils/FormContext";
@@ -98,9 +99,16 @@ const SubjectSelection = () => {
     setFormValues({ regular: regList, back: backList });
   };
 
-  const submitHandler = () => {
-    List();
-    setFormValues({ totalCredit: totalCredit });
+  const submitHandler = async () => {
+    try {
+      var today = new Date().toLocaleDateString("en-us");
+      setFormValues({ date: today });
+      await List();
+      const response: any = await API.post("/form/create-form", data);
+      console.log(response, "response");
+    } catch (e) {
+      console.log(e);
+    }
     // countCredits();
   };
   console.log(regular, "regular>>>");
@@ -114,14 +122,14 @@ const SubjectSelection = () => {
       <Flex
         shadow={"md"}
         zIndex={"2"}
-        position={"fixed"}
+        position={{ lg: "fixed" }}
         bg={totalCredit <= 24 ? "green.400" : "red.500"}
         rounded="xl"
         right="10"
-        top={{ base: "20", sm: "150", lg: "250" }}
+        top={{ base: "20", sm: "160" }}
         align="center"
         justify={"center"}
-        p="4"
+        p="2"
       >
         <VStack>
           <Text color="white">Total Credits</Text>
@@ -131,7 +139,7 @@ const SubjectSelection = () => {
       </Flex>
       <Heading my="2">Regular Courses</Heading>
       <VStack align="start" gap={4} my={6}>
-        <TableContainer>
+        <TableContainer w="full">
           <Table>
             <Thead>
               <Tr>
@@ -198,7 +206,7 @@ const SubjectSelection = () => {
       <Divider w="full" />
       <Heading mt={6}>Re-registered Courses</Heading>
       <VStack align="start" gap={4} my={6}>
-        <TableContainer>
+        <TableContainer w="full">
           <Table>
             <Thead>
               <Tr>

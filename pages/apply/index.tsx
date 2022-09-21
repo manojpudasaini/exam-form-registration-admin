@@ -29,7 +29,7 @@ const ApplyForm = () => {
   });
 
   return (
-    <Flex flexDir="column" width="100%" pt="4">
+    <Flex flexDir="column" width="full" pt="4">
       <Steps activeStep={activeStep} colorScheme="blue">
         {steps.map(({ label, content }) => (
           <Step label={label} key={label}>
