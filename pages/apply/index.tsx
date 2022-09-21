@@ -25,7 +25,7 @@ const content3 = (
 const steps = [
   { label: "Your Details", content: content1 },
   { label: "Select Subjects", content: content2 },
-  { label: "Step 3", content: content3 },
+  { label: "Download Form", content: content3 },
 ];
 
 const ApplyForm = () => {
