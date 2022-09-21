@@ -77,6 +77,14 @@ const PersonalInfo = () => {
       );
       console.log(response, "response from db");
       setFetchedUser(response);
+      setFormValues({
+        name: response?.name,
+        registrationNumber: response?.registrationNumber,
+        symbolNumber: response?.symbolNumber,
+        firebase_id: response?.firebase_id,
+        photo: response?.photo,
+        id: response?.firebase_id,
+      });
     } catch (error) {
       console.log(error, "error");
     }

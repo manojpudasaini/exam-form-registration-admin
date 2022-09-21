@@ -11,7 +11,7 @@ export const FormProvider = (props: any) => {
       ...values,
     }));
   };
-
+  console.log(data, "context data>>>><<><><><><>");
   return (
     <FormContext.Provider value={{ data, setFormValues }}>
       {props.children}

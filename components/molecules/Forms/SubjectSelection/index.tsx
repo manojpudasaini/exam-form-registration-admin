@@ -18,20 +18,22 @@ import {
   Tr,
   VStack,
 } from "@chakra-ui/react";
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { API } from "../../../../utils/api";
 import { useFormData } from "../../../../utils/FormContext";
 // import { subjectWithCredits } from "../../../../utils/subject";
 
 const SubjectSelection = () => {
-  const [totalCredit, setTotalCredit] = useState(0);
   const [disabledCheck, setDisabledCheck] = useState(false);
   const [subupto, setSubupto] = useState([]);
   const [subjects, setSubjects] = useState([]);
   const [regular, setRegular] = useState<any>([]);
   const [back, setBack] = useState<any>([]);
   const [subjectWithCredits, setSubjectWithCredits] = useState<any>();
-  const { data } = useFormData();
+  const { data, setFormValues } = useFormData();
+  const [totalCredit, setTotalCredit] = useState<any>(0);
+  const [codeName, setCodeName] = useState<any>();
   const GetSubjectsUptoCurrentSem = async () => {
     const response: any = await API.get("/subject/getuptosem/" + data.semester);
     const subject: any = await API.get(
@@ -43,6 +45,11 @@ const SubjectSelection = () => {
   const getCodeCredits = async () => {
     const response: any = await API.get("/subject/getcodecredit");
     setSubjectWithCredits(response);
+  };
+
+  const getCodeName = async () => {
+    const response: any = await API.get("/subject/getbycode");
+    setCodeName(response);
   };
   const giveMeCredit = (subject: any) => {
     const credit = subjectWithCredits?.find(
@@ -66,10 +73,46 @@ const SubjectSelection = () => {
   useEffect(() => {
     GetSubjectsUptoCurrentSem();
     getCodeCredits();
+    getCodeName();
   }, []);
 
-  const submitHandler = () => {
-    countCredits();
+  const getMeName = (subject: any) => {
+    const name = codeName?.find((item: any) => item.code == subject);
+    return name;
+  };
+  const List = () => {
+    let regList = [];
+    let backList = [];
+    if (regular?.length > 0) {
+      regList = regular?.map((item: any) => ({
+        ...getMeName(item),
+        remarks: "regular",
+      }));
+    }
+    if (back?.length > 0) {
+      backList = back?.map((item: any) => ({
+        ...getMeName(item),
+        remarks: "re-registered",
+      }));
+    }
+    console.log("finalList>>>.", regList, backList);
+    setFormValues({ regular: regList, back: backList });
+  };
+
+  const submitHandler = async () => {
+    try {
+      var today = new Date().toLocaleDateString("en-us");
+      setFormValues({ date: today });
+      await List();
+      const response: any = await API.post(
+        "/form/create-form/" + data?.id,
+        data
+      );
+      console.log(response, "response");
+    } catch (e) {
+      console.log(e);
+    }
+    // countCredits();
   };
   console.log(regular, "regular>>>");
   console.log(back, "back>>>");
@@ -82,14 +125,14 @@ const SubjectSelection = () => {
       <Flex
         shadow={"md"}
         zIndex={"2"}
-        position={"fixed"}
+        position={{ lg: "fixed" }}
         bg={totalCredit <= 24 ? "green.400" : "red.500"}
         rounded="xl"
         right="10"
-        top={{ base: "20", sm: "150", lg: "250" }}
+        top={{ base: "20", sm: "160" }}
         align="center"
         justify={"center"}
-        p="4"
+        p="2"
       >
         <VStack>
           <Text color="white">Total Credits</Text>
@@ -99,7 +142,7 @@ const SubjectSelection = () => {
       </Flex>
       <Heading my="2">Regular Courses</Heading>
       <VStack align="start" gap={4} my={6}>
-        <TableContainer>
+        <TableContainer w="full">
           <Table>
             <Thead>
               <Tr>
@@ -112,7 +155,10 @@ const SubjectSelection = () => {
             </Thead>
 
             <Tbody>
-              <CheckboxGroup onChange={(data: any) => setRegular(data)}>
+              <CheckboxGroup
+                onChange={(data: any) => setRegular(data)}
+                defaultValue={data?.regular}
+              >
                 {subjects?.map((sub: any, key: any) => (
                   <Tr key={key}>
                     <Td>
@@ -163,7 +209,7 @@ const SubjectSelection = () => {
       <Divider w="full" />
       <Heading mt={6}>Re-registered Courses</Heading>
       <VStack align="start" gap={4} my={6}>
-        <TableContainer>
+        <TableContainer w="full">
           <Table>
             <Thead>
               <Tr>
@@ -176,7 +222,10 @@ const SubjectSelection = () => {
             </Thead>
 
             <Tbody>
-              <CheckboxGroup onChange={(data: any) => setBack(data)}>
+              <CheckboxGroup
+                onChange={(data: any) => setBack(data)}
+                defaultValue={data?.back}
+              >
                 {subupto?.map((sub: any, key: any) => (
                   <Tr key={key}>
                     <Td>
