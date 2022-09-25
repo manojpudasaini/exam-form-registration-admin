@@ -25,7 +25,7 @@ const LinkItems: Array<LinkItemProps> = [
     icon: FiTrendingUp,
   },
   { name: "Uploads", link: "/uploads", icon: FiUpload },
-  // { name: "Favourites", icon: FiStar },
+  { name: "Examination Status", link: "/status", icon: FiStar },
   // { name: "Settings", icon: FiSettings },
 ];
 const Sidebar = () => {

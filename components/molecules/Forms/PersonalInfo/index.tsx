@@ -13,6 +13,7 @@ import {
   ModalContent,
   ModalHeader,
   ModalOverlay,
+  Select,
   SimpleGrid,
   useDisclosure,
   VStack,
@@ -55,15 +56,6 @@ const PersonalInfo = () => {
   } = useForm({
     mode: "all",
     resolver: yupResolver(validationSchema),
-    // defaultValues: {
-    //   name: fetchedUser?.name,
-    //   semester: fetchedUser?.semester || data?.semester,
-    //   program: fetchedUser?.program || data?.program,
-    //   symbol_number: fetchedUser?.symbolNumber || data?.symbol_number,
-    //   registration_number:
-    //     fetchedUser?.registrationNumber || data?.registration_number,
-    //   photo: fetchedUser?.photo,
-    // },
   });
 
   const onSubmit = (value: any) => {
@@ -78,7 +70,9 @@ const PersonalInfo = () => {
       console.log(response, "response from db");
       setFetchedUser(response);
       setFormValues({
-        name: response?.name,
+        firstName: response?.firstName,
+        middleName: response?.middleName,
+        lastName: response?.lastName,
         registrationNumber: response?.registrationNumber,
         symbolNumber: response?.symbolNumber,
         firebase_id: response?.firebase_id,
@@ -96,6 +90,40 @@ const PersonalInfo = () => {
   const ImageUploadHandler = () => {
     onToggle();
   };
+  const semesterOptions = [
+    {
+      option: "1",
+      value: 1,
+    },
+    {
+      option: "2",
+      value: 2,
+    },
+    {
+      option: "3",
+      value: 3,
+    },
+    {
+      option: "4",
+      value: 4,
+    },
+    {
+      option: "5",
+      value: 5,
+    },
+    {
+      option: "6",
+      value: 6,
+    },
+    {
+      option: "7",
+      value: 7,
+    },
+    {
+      option: "8",
+      value: 8,
+    },
+  ];
   return (
     <Box>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -105,30 +133,45 @@ const PersonalInfo = () => {
             minChildWidth={"280px"}
             columns={{ base: 1, md: 2 }}
           >
-            <FormControl isInvalid={!!errors?.name?.message} isRequired>
-              <FormLabel>Name</FormLabel>
+            <FormControl>
+              <FormLabel>First Name</FormLabel>
               <Input
-                id="name"
-                type="text"
-                placeholder="Name"
-                // {...register("name")}
                 isDisabled
-                defaultValue={data?.name || fetchedUser?.name}
+                defaultValue={data?.firstName || fetchedUser?.firstName}
               />
-              <FormErrorMessage>{errors?.name?.message}</FormErrorMessage>
+              <FormErrorMessage>{errors?.firstname?.message}</FormErrorMessage>
+            </FormControl>
+            <FormControl>
+              <FormLabel>Middle Name</FormLabel>
+              <Input
+                isDisabled
+                defaultValue={data?.middleName || fetchedUser?.middleName}
+              />
+              <FormErrorMessage>{errors?.middleName?.message}</FormErrorMessage>
+            </FormControl>
+            <FormControl>
+              <FormLabel>Last Name</FormLabel>
+              <Input
+                isDisabled
+                defaultValue={data?.lastName || fetchedUser?.lastName}
+              />
+              <FormErrorMessage>{errors?.lastName?.message}</FormErrorMessage>
             </FormControl>
             <FormControl isInvalid={!!errors?.semester?.message} isRequired>
               <FormLabel>Semester</FormLabel>
-              <Input
-                id="semester"
-                type="text"
-                placeholder="semester"
+              <Select
                 {...register("semester")}
                 defaultValue={data?.semester || fetchedUser?.semester}
-              />
-              <FormHelperText fontWeight={"semibold"} color="blue.500">
-                (please enter your current semester)
-              </FormHelperText>
+              >
+                <option hidden disabled value="">
+                  select current semester
+                </option>
+                {semesterOptions?.map((item, key) => (
+                  <option key={key} value={item?.value}>
+                    {item?.option}
+                  </option>
+                ))}
+              </Select>
               <FormErrorMessage>
                 {errors?.symbol_number?.message}
               </FormErrorMessage>

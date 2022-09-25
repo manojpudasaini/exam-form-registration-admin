@@ -21,6 +21,7 @@ import { AuthContext } from "../../utils/AuthContext";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { ArrowBackIcon } from "@chakra-ui/icons";
+import axios from "axios";
 
 const programOptions = [
   {
@@ -38,7 +39,9 @@ const programOptions = [
   },
 ];
 const validationSchema = yup.object().shape({
-  name: yup.string().required("This field is mandatory"),
+  firstName: yup.string().required("This field is mandatory"),
+  middleName: yup.string(),
+  lastName: yup.string().required("This field is mandatory"),
   email: yup
     .string()
     .required("This field is mandatory")
@@ -70,7 +73,9 @@ const validationSchema = yup.object().shape({
   photo: yup.mixed().required("You need to upload your photo"),
 });
 type LoginFormInputs = {
-  name: string;
+  firstName: string;
+  middleName: string;
+  lastName: string;
   program: string;
   email: string;
   symbol_number: string;
@@ -105,22 +110,25 @@ function StudentRegistration() {
     console.log(base64URL, "THIS IS BASE64 URL");
     const studentDetails = { ...data, photo: base64URL };
     console.log(studentDetails, "my console data is coming here");
-    await API.post("/api/student", {
-      email: data.email,
-      password: data.password,
-    })
+    await axios
+      .post("/api/student", {
+        email: data.email,
+        password: data.password,
+      })
       .then(async (response: any) => {
         console.log(response, "api response");
 
         await API.post("/student/create", {
-          name: studentDetails.name,
+          firstName: studentDetails.firstName,
+          middleName: studentDetails.middleName,
+          lastName: studentDetails.lastName,
           program: studentDetails.program,
           registrationNumber: studentDetails.registration_number,
           photo: base64URL,
           symbolNumber: studentDetails.symbol_number,
           phone: studentDetails.phone_number,
           email: studentDetails.email,
-          firebase_id: response?.response?.uid,
+          firebase_id: response?.data?.response?.uid,
         })
           .then((res) => {
             router.push("/login");
@@ -202,12 +210,40 @@ function StudentRegistration() {
       >
         <form onSubmit={handleSubmit(formSubmit)} encType="multipart/form-data">
           <Flex direction={"column"} gap={6} w={"full"}>
-            <SimpleGrid columns={[1, null, 2]} gap={6}>
-              <FormControl isInvalid={!!errors?.name?.message} isRequired>
-                <FormLabel>Name</FormLabel>
-                <Input id="name" placeholder="Name" {...register("name")} />
-                <FormErrorMessage>{errors?.name?.message}</FormErrorMessage>
+            <SimpleGrid columns={[1, null, 3]} gap={6}>
+              <FormControl isInvalid={!!errors?.firstName?.message} isRequired>
+                <FormLabel>First Name</FormLabel>
+                <Input
+                  id="firstname"
+                  placeholder="first name"
+                  {...register("firstName")}
+                />
+                <FormErrorMessage>
+                  {errors?.firstName?.message}
+                </FormErrorMessage>
               </FormControl>
+              <FormControl isInvalid={!!errors?.middleName?.message}>
+                <FormLabel>Middle Name</FormLabel>
+                <Input
+                  id="middlename"
+                  placeholder="middle name"
+                  {...register("middleName")}
+                />
+                <FormErrorMessage>
+                  {errors?.middleName?.message}
+                </FormErrorMessage>
+              </FormControl>
+              <FormControl isInvalid={!!errors?.lastName?.message} isRequired>
+                <FormLabel>last Name</FormLabel>
+                <Input
+                  id="lastname"
+                  placeholder="last name"
+                  {...register("lastName")}
+                />
+                <FormErrorMessage>{errors?.lastName?.message}</FormErrorMessage>
+              </FormControl>
+            </SimpleGrid>
+            <SimpleGrid columns={[1, null, 2]} gap={6}>
               <FormControl isInvalid={!!errors?.program?.message} isRequired>
                 <FormLabel>Program</FormLabel>
 

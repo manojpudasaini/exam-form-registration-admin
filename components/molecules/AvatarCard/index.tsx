@@ -4,7 +4,9 @@ import React from "react";
 
 interface AvatarCardProps {
   image?: any;
-  name?: string;
+  firstName?: string;
+  middleName?: string;
+  lastName?: string;
   email?: string;
   phone?: string;
   program?: string;
@@ -12,7 +14,9 @@ interface AvatarCardProps {
 
 const AvatarCard = ({
   image,
-  name,
+  firstName,
+  middleName,
+  lastName,
   phone,
   email,
   program,
@@ -34,13 +38,13 @@ const AvatarCard = ({
         gap={{ base: "4", md: "8" }}
         direction={{ base: "column", md: "row" }}
       >
-        <Avatar size={{ base: "xl", md: "2xl" }} name={name} src={image} />
+        <Avatar size={{ base: "xl", md: "2xl" }} name={firstName} src={image} />
         <VStack
           align={{ base: "center", md: "start" }}
           spacing={{ base: "1", md: "2" }}
         >
           <Text fontSize={{ base: "2xl", md: "4xl" }} fontWeight={"semibold"}>
-            {name}
+            {firstName} {middleName} {lastName}
           </Text>
           <Text color="gray.600">{email}</Text>
           <Text color="gray.600" fontWeight={"bold"}>
