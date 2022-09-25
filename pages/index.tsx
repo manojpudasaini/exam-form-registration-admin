@@ -28,6 +28,7 @@ import { AuthContext } from "../utils/AuthContext";
 import PrivateRoute from "../withPrivateRoute";
 
 const Home: NextPage = () => {
+  const [status, setStatus] = useState<any>();
   const { user } = useContext(AuthContext);
   const [fetchUser, setFetchUser] = useState<any>();
   const [subject, setSubjects] = useState<any>();
@@ -43,9 +44,20 @@ const Home: NextPage = () => {
       setSubjects(res);
     });
   };
+  const fetchStatus = async () => {
+    const response: any = await API.get("/status/1");
+    if (response) {
+      setStatus(response);
+    }
+  };
+
+  useEffect(() => {
+    fetchStatus();
+  }, []);
   useEffect(() => {
     fetchUserFromDB();
     fetchSubjects();
+    fetchStatus();
   }, []);
   return (
     <Box width={"full"}>
@@ -66,7 +78,9 @@ const Home: NextPage = () => {
         spacing="4"
       >
         <AvatarCard
-          name={fetchUser?.name}
+          firstName={fetchUser?.firstName}
+          middleName={fetchUser?.middleName}
+          lastName={fetchUser?.lastName}
           image={fetchUser?.photo}
           email={fetchUser?.email}
           phone={fetchUser?.phone}
@@ -148,9 +162,15 @@ const Home: NextPage = () => {
           <Text fontSize={"lg"} fontWeight="semibold" color="gray.600">
             University Exam Form Registration Status:
           </Text>
-          <Tag variant="solid" colorScheme={"green"} size="lg">
-            Currently Open
-          </Tag>
+          {status?.status ? (
+            <Tag variant="solid" colorScheme={"green"} size="lg">
+              Open
+            </Tag>
+          ) : (
+            <Tag variant="solid" colorScheme={"red"} size="lg">
+              Currently Closed
+            </Tag>
+          )}
         </Flex>
       </VStack>
     </Box>

@@ -25,6 +25,7 @@ import { useFormData } from "../../../../utils/FormContext";
 // import { subjectWithCredits } from "../../../../utils/subject";
 
 const SubjectSelection = () => {
+  const [status, setStatus] = useState<any>();
   const [disabledCheck, setDisabledCheck] = useState(false);
   const [subupto, setSubupto] = useState([]);
   const [subjects, setSubjects] = useState([]);
@@ -74,6 +75,7 @@ const SubjectSelection = () => {
     GetSubjectsUptoCurrentSem();
     getCodeCredits();
     getCodeName();
+    fetchStatus();
   }, []);
 
   const getMeName = (subject: any) => {
@@ -102,8 +104,13 @@ const SubjectSelection = () => {
   const submitHandler = async () => {
     try {
       var today = new Date().toLocaleDateString("en-us");
-      setFormValues({ date: today });
-      await List();
+      setFormValues({
+        date: today,
+        totalCredit: totalCredit,
+        semester: status?.semester,
+        year: status?.year,
+      });
+      List();
       const response: any = await API.post(
         "/form/create-form/" + data?.id,
         data
@@ -120,6 +127,12 @@ const SubjectSelection = () => {
   useEffect(() => {
     countCredits();
   }, [regular, back]);
+  const fetchStatus = async () => {
+    const response: any = await API.get("/status/1");
+    if (response) {
+      setStatus(response);
+    }
+  };
   return (
     <Box w="full" position={"relative"}>
       <Flex
@@ -137,7 +150,7 @@ const SubjectSelection = () => {
         <VStack>
           <Text color="white">Total Credits</Text>
           <Divider />
-          <Heading color="white">{totalCredit}</Heading>
+          <Heading color="white">{parseInt(totalCredit)}</Heading>
         </VStack>
       </Flex>
       <Heading my="2">Regular Courses</Heading>
