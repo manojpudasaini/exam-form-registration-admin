@@ -16,6 +16,7 @@ import {
   Th,
   Thead,
   Tr,
+  useToast,
   VStack,
 } from "@chakra-ui/react";
 import axios from "axios";
@@ -25,7 +26,9 @@ import { useFormData } from "../../../../utils/FormContext";
 // import { subjectWithCredits } from "../../../../utils/subject";
 
 const SubjectSelection = () => {
+  const toast = useToast();
   const [status, setStatus] = useState<any>();
+  const [dis, setDis] = useState(false);
   const [disabledCheck, setDisabledCheck] = useState(false);
   const [subupto, setSubupto] = useState([]);
   const [subjects, setSubjects] = useState([]);
@@ -126,6 +129,11 @@ const SubjectSelection = () => {
   console.log(totalCredit, "totalCredits>>>");
   useEffect(() => {
     countCredits();
+    if (back?.length > 3) {
+      setDis(true);
+    } else {
+      setDis(false);
+    }
   }, [regular, back]);
   const fetchStatus = async () => {
     const response: any = await API.get("/status/1");
@@ -135,11 +143,18 @@ const SubjectSelection = () => {
   };
   return (
     <Box w="full" position={"relative"}>
+      {dis &&
+        toast({
+          status: "error",
+          title: "maximum re-registered subjects reached",
+          description: "only 3 subjects can be re-registered",
+          isClosable: true,
+        })}
       <Flex
         shadow={"md"}
         zIndex={"2"}
         position={{ lg: "fixed" }}
-        bg={totalCredit <= 24 ? "green.400" : "red.500"}
+        bg={totalCredit <= 24 ? "green.400" : "yellow.500"}
         rounded="xl"
         right="10"
         top={{ base: "20", sm: "160" }}
@@ -288,7 +303,7 @@ const SubjectSelection = () => {
       </VStack>
 
       <Button
-        disabled={totalCredit > 24}
+        disabled={dis}
         colorScheme={"blue"}
         size="lg"
         width="300px"
