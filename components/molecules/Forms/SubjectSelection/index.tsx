@@ -6,7 +6,6 @@ import {
   Divider,
   Flex,
   Heading,
-  HStack,
   Table,
   TableContainer,
   Tag,
@@ -19,11 +18,9 @@ import {
   useToast,
   VStack,
 } from "@chakra-ui/react";
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { API } from "../../../../utils/api";
 import { useFormData } from "../../../../utils/FormContext";
-// import { subjectWithCredits } from "../../../../utils/subject";
 
 const SubjectSelection = () => {
   const toast = useToast();
@@ -36,7 +33,7 @@ const SubjectSelection = () => {
   const [back, setBack] = useState<any>([]);
   const [subjectWithCredits, setSubjectWithCredits] = useState<any>();
   const { data, setFormValues } = useFormData();
-  const [totalCredit, setTotalCredit] = useState<any>(0);
+  const [totalCredit, setTotalCredit] = useState(0);
   const [codeName, setCodeName] = useState<any>();
   const GetSubjectsUptoCurrentSem = async () => {
     const response: any = await API.get("/subject/getuptosem/" + data.semester);
@@ -69,7 +66,7 @@ const SubjectSelection = () => {
       finalCredit = finalSubjects.map((item: any) => giveMeCredit(item));
     }
 
-    if (finalCredit.length > 0) {
+    if (finalCredit?.length > 0) {
       setTotalCredit(finalCredit.reduce(reducer));
     }
   };
@@ -141,6 +138,7 @@ const SubjectSelection = () => {
       setStatus(response);
     }
   };
+  console.log(totalCredit, "total>>>><><><><><><><>");
   return (
     <Box w="full" position={"relative"}>
       {dis &&
@@ -165,7 +163,7 @@ const SubjectSelection = () => {
         <VStack>
           <Text color="white">Total Credits</Text>
           <Divider />
-          <Heading color="white">{parseInt(totalCredit)}</Heading>
+          <Heading color="white">{totalCredit}</Heading>
         </VStack>
       </Flex>
       <Heading my="2">Regular Courses</Heading>

@@ -78,6 +78,7 @@ const PersonalInfo = () => {
         firebase_id: response?.firebase_id,
         photo: response?.photo,
         id: response?.firebase_id,
+        program: response?.program,
       });
     } catch (error) {
       console.log(error, "error");
